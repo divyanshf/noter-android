@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.github_link -> {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/DivyanshFalodiya/noter-web"))
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/DivyanshFalodiya/noter-android"))
                 startActivity(browserIntent)
                 true
             }
