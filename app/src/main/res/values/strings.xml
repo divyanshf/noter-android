@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Noter</string>
+    <string name="app_subtitle">A safe place for your thoughts.</string>
+    <string name="hamburger">Hamburger</string>
+    <string name="account">Profile</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_search">Search your notes . . .</string>
+    <string name="open">Open Drawer</string>
+    <string name="close">Close Drawer</string>
+    <string name="all_notes">Notes</string>
+    <string name="starred">Starred</string>
+    <string name="archives">Archives</string>
+    <string name="trash">Trash</string>
+    <string name="openSource">Open-Source</string>
+</resources>
