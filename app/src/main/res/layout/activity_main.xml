@@ -7,8 +7,8 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_main"
-        android:id="@+id/app_main"/>
+        layout="@layout/layout_main"
+        android:id="@+id/layout_main"/>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
