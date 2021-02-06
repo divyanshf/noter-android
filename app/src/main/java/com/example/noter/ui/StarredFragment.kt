@@ -1,11 +1,12 @@
-package com.example.noter
+package com.example.noter.ui
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.EditText
+import com.example.noter.R
 
-class TrashFragment : Fragment() {
+class StarredFragment : Fragment() {
     private var toolbarHead: EditText? = null
 
     override fun onCreateView(
@@ -13,13 +14,12 @@ class TrashFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_trash, container, false)
+        val view = inflater.inflate(R.layout.fragment_starred, container, false)
 
         toolbarHead = activity?.findViewById(R.id.toolbar_head)
-        toolbarHead?.setText(R.string.trash)
+        toolbarHead?.setText(R.string.starred)
         toolbarHead?.setOnClickListener(null)
 
         return view
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.noter
+package com.example.noter.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -10,10 +10,10 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat.END
 import androidx.core.view.GravityCompat.START
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.example.noter.R
 import com.google.android.material.navigation.NavigationView
 
 
@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawer: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var fragment:Fragment
+    private var flagMenu:Boolean = true
+    private val username:String? = null  //  Temporary variable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +49,15 @@ class MainActivity : AppCompatActivity() {
         toolbarHead.setBackgroundResource(android.R.color.transparent)
 
         navigationView.setNavigationItemSelectedListener {
+            flagMenu = false
+            invalidateOptionsMenu()
             when(it.itemId){
                 R.id.all_notes -> {
                     fragment = NotesFragment()
                     transactFragment()
                     drawer.closeDrawer(START)
+                    flagMenu = true
+                    invalidateOptionsMenu()
                     true
                 }
                 R.id.starred -> {
@@ -98,6 +104,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
+        if(flagMenu){
+            menu?.findItem(R.id.menu_search)?.isVisible = false
+        }
         return true
     }
 
