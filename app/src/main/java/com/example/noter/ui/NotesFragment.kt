@@ -24,6 +24,11 @@ class NotesFragment : Fragment() {
         //  Add the search notes click listener
         toolbarHead?.setOnClickListener {
             Toast.makeText(activity, "Search", Toast.LENGTH_SHORT).show()
+            var fragment = SearchFragment()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.content_fragment, fragment)
+            transaction?.addToBackStack(null)
+            transaction?.commit()
         }
 
         return view

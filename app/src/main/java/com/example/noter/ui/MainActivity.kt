@@ -116,6 +116,12 @@ class MainActivity : AppCompatActivity() {
                 drawer.openDrawer(START)
                 true
             }
+            R.id.menu_search -> {
+                Toast.makeText(this, "Search icon", Toast.LENGTH_SHORT).show()
+                fragment = SearchFragment()
+                transactFragment()
+                true
+            }
             R.id.account -> {
                 Toast.makeText(this, "ACCOUNT", Toast.LENGTH_SHORT).show()
                 true
