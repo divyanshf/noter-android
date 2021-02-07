@@ -49,42 +49,23 @@ class MainActivity : AppCompatActivity() {
         toolbarHead.setBackgroundResource(android.R.color.transparent)
 
         navigationView.setNavigationItemSelectedListener {
-            flagMenu = false
-            invalidateOptionsMenu()
-            when(it.itemId){
-                R.id.all_notes -> {
-                    fragment = NotesFragment()
-                    transactFragment()
-                    drawer.closeDrawer(START)
-                    flagMenu = true
-                    invalidateOptionsMenu()
-                    true
-                }
-                R.id.starred -> {
-                    fragment = StarredFragment()
-                    transactFragment()
-                    drawer.closeDrawer(START)
-                    true
-                }
-                R.id.archives -> {
-                    fragment = ArchivesFragment()
-                    transactFragment()
-                    drawer.closeDrawer(START)
-                    true
-                }
-                R.id.trash -> {
-                    fragment = TrashFragment()
-                    transactFragment()
-                    drawer.closeDrawer(START)
-                    true
-                }
-                R.id.github_link -> {
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/DivyanshFalodiya/noter-android"))
-                    startActivity(browserIntent)
-                    true
-                }
-                else -> false
-            }
+            onNavItemSelect(it)
+        }
+        initializeFragment()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        navigationView.setNavigationItemSelectedListener {
+            onNavItemSelect(it)
+        }
+        initializeFragment()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navigationView.setNavigationItemSelectedListener {
+            onNavItemSelect(it)
         }
         initializeFragment()
     }
@@ -93,6 +74,45 @@ class MainActivity : AppCompatActivity() {
         navigationView.setCheckedItem(R.id.all_notes)
         fragment = NotesFragment()
         transactFragment()
+    }
+
+    private fun onNavItemSelect(menuItem: MenuItem) : Boolean{
+        flagMenu = false
+        invalidateOptionsMenu()
+        when(menuItem.itemId){
+            R.id.all_notes -> {
+                fragment = NotesFragment()
+                transactFragment()
+                drawer.closeDrawer(START)
+                flagMenu = true
+                invalidateOptionsMenu()
+                return true
+            }
+            R.id.starred -> {
+                fragment = StarredFragment()
+                transactFragment()
+                drawer.closeDrawer(START)
+                return true
+            }
+            R.id.archives -> {
+                fragment = ArchivesFragment()
+                transactFragment()
+                drawer.closeDrawer(START)
+                return true
+            }
+            R.id.trash -> {
+                fragment = TrashFragment()
+                transactFragment()
+                drawer.closeDrawer(START)
+                return true
+            }
+            R.id.github_link -> {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/DivyanshFalodiya/noter-android"))
+                startActivity(browserIntent)
+                return true
+            }
+            else -> return false
+        }
     }
 
     private fun transactFragment(){
