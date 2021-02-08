@@ -4,7 +4,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="end">
+    tools:openDrawer="start">
 
     <RelativeLayout
         android:gravity="start"
@@ -22,20 +22,19 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             app:popupTheme="@style/Theme.AppCompat.DayNight" >
 
-            <com.google.android.material.textfield.TextInputEditText
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/toolbar_head_edit"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="15sp"/>-->
+
+            <EditText
                 android:id="@+id/toolbar_head_edit"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="@string/menu_search"
                 android:textSize="15sp"/>
 
-<!--            <EditText-->
-<!--                android:id="@+id/toolbar_head"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:textSize="15sp"-->
-<!--                android:focusable="false"-->
-<!--                android:editable="false"/>-->
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView

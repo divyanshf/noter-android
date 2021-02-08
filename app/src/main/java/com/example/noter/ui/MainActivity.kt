@@ -20,16 +20,14 @@ import com.example.noter.R
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
-    private lateinit var toolbarHead: TextInputEditText
+    private lateinit var toolbarHead: EditText
     private lateinit var drawer: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var fragment:Fragment
     private lateinit var sharedPreferences:SharedPreferences
-    private var flagMenu:Boolean = true
     private val username:String? = null  //  Temporary variable
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
+
         navigationView.setNavigationItemSelectedListener {
             onNavItemSelect(it)
         }
@@ -78,16 +78,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeFragment(){
-        toolbar.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
         navigationView.setCheckedItem(R.id.all_notes)
         fragment = NotesFragment()
         transactFragment()
     }
 
     private fun onNavItemSelect(menuItem: MenuItem) : Boolean{
-        hideKeyboard()
-        toolbar.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
-        flagMenu = false
         invalidateOptionsMenu()
 
         when(menuItem.itemId){
@@ -95,7 +91,6 @@ class MainActivity : AppCompatActivity() {
                 fragment = NotesFragment()
                 transactFragment()
                 drawer.closeDrawer(START)
-                flagMenu = true
                 invalidateOptionsMenu()
                 return true
             }
@@ -135,9 +130,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
-        if(flagMenu){
-            menu?.findItem(R.id.menu_search)?.isVisible = false
-        }
         return true
     }
 
@@ -145,9 +137,11 @@ class MainActivity : AppCompatActivity() {
         return when(item.itemId){
             android.R.id.home -> {
                 if(sharedPreferences.getBoolean("Search", false)){
+                    Log.i("HOME", "false")
                     false
                 }
                 else{
+                    Log.i("HOME", "true")
                     drawer.openDrawer(START)
                     true
                 }
@@ -165,13 +159,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun hideKeyboard(){
-        try {
-            val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }
 }

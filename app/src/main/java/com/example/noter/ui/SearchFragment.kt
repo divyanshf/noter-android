@@ -3,8 +3,10 @@ package com.example.noter.ui
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.EditText
 import android.widget.Toast
@@ -16,7 +18,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 class SearchFragment : Fragment() {
     private var toolbar: Toolbar? = null
-    private var toolbarHead: TextInputEditText? = null
+    private var toolbarHead: EditText? = null
     private var sharedPreferences:SharedPreferences? = null
     private var navigationView:NavigationView? = null
 
@@ -33,6 +35,8 @@ class SearchFragment : Fragment() {
         navigationView = activity?.findViewById(R.id.navigation_view)
 
         toolbar?.title = null
+        toolbarHead?.requestFocus()
+        openKeyboard()
 
         val toolbarHeadLayout = toolbarHead?.layoutParams
         toolbarHeadLayout?.width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -42,15 +46,22 @@ class SearchFragment : Fragment() {
         marginParamas.setMargins(0,0,0,0)
         toolbar?.setBackgroundResource(R.drawable.background_toolbar)
 
-        toolbarHead?.setHint(R.string.menu_search)
-        toolbarHead?.text = null
-        toolbarHead?.inputType = InputType.TYPE_CLASS_TEXT
+        toolbarHead?.setText("")
+        toolbarHead?.inputType = InputType.TYPE_TEXT_VARIATION_NORMAL
+        toolbarHead?.setOnClickListener {
+            openKeyboard()
+        }
 
         toolbar?.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
         setHasOptionsMenu(true)
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.findItem(R.id.menu_search).isVisible = false
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {
@@ -67,6 +78,7 @@ class SearchFragment : Fragment() {
         val marginParamas = toolbar?.layoutParams as ViewGroup.MarginLayoutParams
         marginParamas.setMargins(dp10, dp10, dp10, dp10)
         toolbar?.setBackgroundResource(R.drawable.corner_background_toolbar)
+
     }
 
     private fun getPixel(dp:Float):Int{
@@ -79,18 +91,38 @@ class SearchFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.i("BACK", "false")
         return when(item.itemId){
             android.R.id.home -> {
+                Log.i("BACK", "true")
+                hideKeyboard()
                 toolbar?.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
                 navigationView?.setCheckedItem(R.id.all_notes)
-                val fragment = NotesFragment()
                 val transaction = activity?.supportFragmentManager?.beginTransaction()
-                transaction?.replace(R.id.content_fragment, fragment)
-                transaction?.addToBackStack(null)
-                transaction?.commit()
+                val fragment = NotesFragment()
+                transaction?.replace(R.id.content_fragment, fragment)?.commit()
                 true
             }
             else -> false
+        }
+    }
+
+    private fun hideKeyboard(){
+        try {
+            val imm: InputMethodManager = activity?.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
+    private fun openKeyboard(){
+        try {
+            Log.i("Keyboard", "Open")
+            val imm: InputMethodManager = activity?.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+        }catch (e:Exception){
+            e.printStackTrace()
         }
     }
 }

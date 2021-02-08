@@ -9,7 +9,7 @@ import com.example.noter.R
 import com.google.android.material.textfield.TextInputEditText
 
 class StarredFragment : Fragment() {
-    private var toolbarHead: TextInputEditText? = null
+    private var toolbarHead: EditText? = null
     private var toolbar: Toolbar? = null
 
     override fun onCreateView(
