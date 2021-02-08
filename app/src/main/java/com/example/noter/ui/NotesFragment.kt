@@ -38,8 +38,6 @@ class NotesFragment : Fragment() {
 
         //  Open the Search Fragment
         toolbarHead?.setOnClickListener {
-            toolbarHead?.isFocusable = true
-            toolbarHead?.isFocusableInTouchMode = true
             val fragment = SearchFragment()
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.content_fragment, fragment)

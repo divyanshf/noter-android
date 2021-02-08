@@ -34,9 +34,17 @@ class SearchFragment : Fragment() {
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
         navigationView = activity?.findViewById(R.id.navigation_view)
 
+        toolbarHead?.isFocusable = true
+        toolbarHead?.isFocusableInTouchMode = true
+
         toolbar?.title = null
         toolbarHead?.requestFocus()
-        openKeyboard()
+
+        toolbarHead?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+                openKeyboard()
+            }
+        }
 
         val toolbarHeadLayout = toolbarHead?.layoutParams
         toolbarHeadLayout?.width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -91,7 +99,6 @@ class SearchFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.i("BACK", "false")
         return when(item.itemId){
             android.R.id.home -> {
                 Log.i("BACK", "true")
