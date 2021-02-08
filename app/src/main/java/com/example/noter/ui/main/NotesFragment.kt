@@ -1,16 +1,11 @@
-package com.example.noter.ui
+package com.example.noter.ui.main
 
 import android.os.Bundle
-import android.text.InputType
-import android.util.Log
 import android.view.*
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.noter.R
-import com.google.android.material.textfield.TextInputEditText
-import kotlin.math.log
 
 
 class NotesFragment : Fragment() {

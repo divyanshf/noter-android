@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.StarredFragment">
+    tools:context=".ui.auth.RegisterFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <TextView
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="10dp"
-        tools:listitem="@layout/note"/>
+        android:text="REGISTER" />
 
 </FrameLayout>

@@ -1,4 +1,4 @@
-package com.example.noter.ui
+package com.example.noter.ui.main
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -9,12 +9,10 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.noter.R
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.textfield.TextInputEditText
 
 class SearchFragment : Fragment() {
     private var toolbar: Toolbar? = null
@@ -40,7 +38,7 @@ class SearchFragment : Fragment() {
         toolbar?.title = null
         toolbarHead?.requestFocus()
 
-        toolbarHead?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+        toolbarHead?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if(hasFocus){
                 openKeyboard()
             }

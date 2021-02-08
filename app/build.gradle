@@ -41,6 +41,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-firestore:22.0.2'
     implementation 'com.google.firebase:firebase-auth:20.0.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
     def lifecycle_version = "2.2.0"
     def room_version = "2.2.6"
     def arch_version = "2.1.0"

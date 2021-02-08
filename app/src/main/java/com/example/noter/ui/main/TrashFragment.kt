@@ -1,4 +1,4 @@
-package com.example.noter.ui
+package com.example.noter.ui.main
 
 import android.os.Bundle
 import android.view.*
@@ -8,7 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import com.example.noter.R
 import com.google.android.material.textfield.TextInputEditText
 
-class StarredFragment : Fragment() {
+class TrashFragment : Fragment() {
     private var toolbarHead: EditText? = null
     private var toolbar: Toolbar? = null
 
@@ -17,14 +17,15 @@ class StarredFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_starred, container, false)
+        val view = inflater.inflate(R.layout.fragment_trash, container, false)
 
         toolbar = activity?.findViewById(R.id.my_toolbar)
 //        toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
-//        toolbarHead?.setText(R.string.starred)
+//        toolbarHead?.setText(R.string.trash)
 //        toolbarHead?.setOnClickListener(null)
-        toolbar?.setTitle(R.string.starred)
+        toolbar?.setTitle(R.string.trash)
 
         return view
     }
+
 }

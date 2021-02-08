@@ -1,33 +1,30 @@
-package com.example.noter.ui
+package com.example.noter.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.fragment.app.Fragment
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import com.example.noter.R
 import com.google.android.material.textfield.TextInputEditText
 
-class ArchivesFragment : Fragment() {
+class StarredFragment : Fragment() {
     private var toolbarHead: EditText? = null
-    private var toolbar:Toolbar? = null
+    private var toolbar: Toolbar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_archives, container, false)
+        val view = inflater.inflate(R.layout.fragment_starred, container, false)
 
         toolbar = activity?.findViewById(R.id.my_toolbar)
 //        toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
-//        toolbarHead?.setText(R.string.archives)
+//        toolbarHead?.setText(R.string.starred)
 //        toolbarHead?.setOnClickListener(null)
-        toolbar?.setTitle(R.string.archives)
+        toolbar?.setTitle(R.string.starred)
 
         return view
     }
-
 }
