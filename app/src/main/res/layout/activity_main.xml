@@ -4,7 +4,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start">
+    tools:openDrawer="end">
 
     <RelativeLayout
         android:gravity="start"
@@ -15,19 +15,27 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/background_toolbar"
+            android:background="@drawable/corner_background_toolbar"
             android:elevation="5dp"
+            app:titleTextAppearance="@style/TitleAppearance"
             android:layout_margin="10dp"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             app:popupTheme="@style/Theme.AppCompat.DayNight" >
-            <EditText
-                android:id="@+id/toolbar_head"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="15sp"
-                android:focusable="false"
-                android:editable="false"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/toolbar_head_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"/>
+
+<!--            <EditText-->
+<!--                android:id="@+id/toolbar_head"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:textSize="15sp"-->
+<!--                android:focusable="false"-->
+<!--                android:editable="false"/>-->
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView

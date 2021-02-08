@@ -1,10 +1,13 @@
 package com.example.noter.ui
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -15,15 +18,17 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.noter.R
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
-    private lateinit var toolbarHead: EditText
+    private lateinit var toolbarHead: TextInputEditText
     private lateinit var drawer: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var fragment:Fragment
+    private lateinit var sharedPreferences:SharedPreferences
     private var flagMenu:Boolean = true
     private val username:String? = null  //  Temporary variable
 
@@ -31,8 +36,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        sharedPreferences = getSharedPreferences("com.example.noter.ui", MODE_PRIVATE)
+
         toolbar = findViewById(R.id.my_toolbar)
-        toolbarHead = findViewById(R.id.toolbar_head)
+        toolbarHead = findViewById(R.id.toolbar_head_edit)
+
+        toolbarHead.setBackgroundResource(android.R.color.transparent)
+
         drawer = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
 
@@ -44,9 +54,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        toolbar.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
-        toolbarHead.setBackgroundResource(android.R.color.transparent)
 
         navigationView.setNavigationItemSelectedListener {
             onNavItemSelect(it)
@@ -71,14 +78,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeFragment(){
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
         navigationView.setCheckedItem(R.id.all_notes)
         fragment = NotesFragment()
         transactFragment()
     }
 
     private fun onNavItemSelect(menuItem: MenuItem) : Boolean{
+        hideKeyboard()
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
         flagMenu = false
         invalidateOptionsMenu()
+
         when(menuItem.itemId){
             R.id.all_notes -> {
                 fragment = NotesFragment()
@@ -133,11 +144,15 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             android.R.id.home -> {
-                drawer.openDrawer(START)
-                true
+                if(sharedPreferences.getBoolean("Search", false)){
+                    false
+                }
+                else{
+                    drawer.openDrawer(START)
+                    true
+                }
             }
             R.id.menu_search -> {
-                Toast.makeText(this, "Search icon", Toast.LENGTH_SHORT).show()
                 fragment = SearchFragment()
                 transactFragment()
                 true
@@ -147,6 +162,16 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             else -> false
+        }
+    }
+
+
+    private fun hideKeyboard(){
+        try {
+            val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        }catch (e:Exception){
+            e.printStackTrace()
         }
     }
 }

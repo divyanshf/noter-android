@@ -3,4 +3,7 @@
     <style name="SelectAppearance">
         <item name="colorControlHighlight">@color/gold</item>
     </style>
+    <style name="TitleAppearance">
+        <item name="android:textSize">15dp</item>
+    </style>
 </resources>
