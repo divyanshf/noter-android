@@ -9,7 +9,9 @@ import android.widget.Button
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.noter.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthFragment : Fragment(), View.OnClickListener {
     private var navController:NavController? = null
 

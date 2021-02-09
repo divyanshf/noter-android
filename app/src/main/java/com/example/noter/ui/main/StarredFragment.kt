@@ -7,7 +7,9 @@ import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
 import com.example.noter.R
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StarredFragment : Fragment() {
     private var toolbarHead: EditText? = null
     private var toolbar: Toolbar? = null

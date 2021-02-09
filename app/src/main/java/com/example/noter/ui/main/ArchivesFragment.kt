@@ -9,7 +9,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.noter.R
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class ArchivesFragment : Fragment() {
     private var toolbarHead: EditText? = null
     private var toolbar:Toolbar? = null

@@ -6,8 +6,10 @@ import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.noter.R
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class NotesFragment : Fragment() {
     private var toolbar: Toolbar? = null
     private var toolbarHead: EditText? = null

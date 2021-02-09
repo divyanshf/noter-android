@@ -18,7 +18,9 @@ import androidx.fragment.app.Fragment
 import com.example.noter.R
 import com.example.noter.ui.auth.AuthActivity
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
