@@ -27,4 +27,15 @@ constructor(
                 }
             }
     }
+
+    fun registerUser(email:String, password:String){
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        Log.i("REGISTER", "YES")
+                    }else{
+                        Log.i("REGISTER", "${it.exception}")
+                    }
+                }
+    }
 }

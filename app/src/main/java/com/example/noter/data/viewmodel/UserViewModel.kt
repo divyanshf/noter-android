@@ -27,4 +27,10 @@ constructor(
             userRepository.loginUser(email, password)
         }
     }
+
+    fun register(email:String, password: String){
+        viewModelScope.launch {
+            userRepository.registerUser(email, password)
+        }
+    }
 }
