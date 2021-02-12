@@ -3,6 +3,7 @@ package com.example.noter.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import com.example.noter.R
@@ -25,13 +26,13 @@ class EmptyActivity : AppCompatActivity() {
 
         var intent = Intent(this, MainActivity::class.java)
 
-        userViewModel.getUser().observe(this, {
-            if(it == null){
+        firebaseAuth.addAuthStateListener {
+            Log.i("User", it.currentUser.toString())
+            if(it.currentUser == null){
                 intent = Intent(this, AuthActivity::class.java)
             }
             startActivity(intent)
-        })
-
+        }
 
     }
 }

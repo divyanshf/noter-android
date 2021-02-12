@@ -54,7 +54,6 @@ class RegisterFragment : Fragment() {
     private fun checkUser(){
         firebaseAuth.addAuthStateListener {
             if(it.currentUser != null){
-                Log.i("User", it.currentUser.toString())
                 val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
             }
