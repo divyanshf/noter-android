@@ -24,7 +24,7 @@ constructor(
     }
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
-        var currentNote = notes[position]
+        val currentNote = notes[position]
         holder.titleView.text = currentNote.title
         holder.contentView.text = currentNote.content
     }

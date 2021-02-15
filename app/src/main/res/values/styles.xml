@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="SelectAppearance">
+    <style name="DrawerAppearance" parent="Theme.MaterialComponents.DayNight">
         <item name="colorControlHighlight">@color/gold</item>
     </style>
-    <style name="TitleAppearance">
+    <style name="TitleAppearance" parent="Theme.MaterialComponents.DayNight">
         <item name="android:textSize">15dp</item>
     </style>
 </resources>

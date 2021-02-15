@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.noter.R
 import com.example.noter.data.model.Note
-import com.example.noter.data.viewmodel.NoteViewModel
+import com.example.noter.data.viewmodel.NotesViewModel
 import com.example.noter.ui.adapter.NotesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,8 +22,8 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
     private var toolbarHead: EditText? = null
     private lateinit var recyclerView:RecyclerView
     private lateinit var recyclerViewAdapter:NotesAdapter
-    private val notesViewModel:NoteViewModel by viewModels()
-    val notes = ArrayList<Note>()
+    private val notesViewModel:NotesViewModel by viewModels()
+//    val notes = ArrayList<Note>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,17 +57,18 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
             transaction?.commit()
         }
 
-        notes.add(Note("aaa", "title1", "content1", false, false, false))
-        notes.add(Note("aab", "title2", "content2", false, false, false))
-        notes.add(Note("aac", "title3", "content3", false, false, false))
-        notes.add(Note("aad", "title4", "content4", false, false, false))
-        notes.add(Note("aae", "title5", "content5", false, false, false))
+//        notes.add(Note("aaa", "title1", "content1", false, false, false))
+//        notes.add(Note("aab", "title2", "content2", false, false, false))
+//        notes.add(Note("aac", "title3", "content3", false, false, false))
+//        notes.add(Note("aad", "title4", "content4", false, false, false))
+//        notes.add(Note("aae", "title5", "content5", false, false, false))
 
-        recyclerViewAdapter.setNotes(notes)
-//        notesViewModel.mAllNotes.observe(viewLifecycleOwner, {
-//            Log.i("Notes", it.toString())
-//            recyclerViewAdapter.setNotes(it)
-//        })
+//        recyclerViewAdapter.setNotes(notes)
+        notesViewModel.getAllNotes()
+        notesViewModel.mAllNotes.observe(viewLifecycleOwner, {
+            Log.i("Notes", it.toString())
+            recyclerViewAdapter.setNotes(it)
+        })
 
         setHasOptionsMenu(true)
 
