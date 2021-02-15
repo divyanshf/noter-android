@@ -20,10 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_add_24"
-            android:elevation="5dp"
-            android:layout_margin="20dp"
-            android:layout_alignParentBottom="true"
+            android:elevation="4dp"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp"
             android:contentDescription="@string/add_note" />
 
     </RelativeLayout>

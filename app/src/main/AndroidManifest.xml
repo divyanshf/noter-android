@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_baseline_local_library_24"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        android:theme="@style/Theme.Noter">
         <activity android:name=".ui.EmptyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

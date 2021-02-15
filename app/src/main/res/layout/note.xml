@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:strokeWidth="1dp"
-    app:strokeColor="?attr/editTextColor"
+    app:strokeColor="@color/grey"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardCornerRadius="10dp"
     app:cardElevation="0dp"
