@@ -33,16 +33,95 @@ constructor(
         Log.i("Notes", "After")
         val data = snap.documents
         for(i in data){
-            Log.i("Note", i.toString())
-            val note = Note(
-                i.id,
-                i["title"] as String,
-                i["content"] as String,
-                i["star"] as Boolean,
-                i["archive"] as Boolean,
-                i["trash"] as Boolean
-            )
-            allNotes.add(note)
+            if(i["trash"] == false && i["archive"] == false){
+                val note = Note(
+                        i.id,
+                        i["title"] as String,
+                        i["content"] as String,
+                        i["star"] as Boolean,
+                        i["archive"] as Boolean,
+                        i["trash"] as Boolean
+                )
+                allNotes.add(note)
+            }
+        }
+        emit(allNotes)
+    }
+
+    suspend fun getArchivedNotes() = flow<List<Note>> {
+        val allNotes = ArrayList<Note>()
+        Log.i("Notes", "Before")
+        val snap = firebaseFirestore.collection("users")
+                .document(user?.email!!)
+                .collection("notes")
+                .get()
+                .await()
+        Log.i("Notes", "After")
+        val data = snap.documents
+        for(i in data){
+            if(i["archive"] == true && i["trash"] == false){
+                val note = Note(
+                        i.id,
+                        i["title"] as String,
+                        i["content"] as String,
+                        i["star"] as Boolean,
+                        i["archive"] as Boolean,
+                        i["trash"] as Boolean
+                )
+                allNotes.add(note)
+            }
+        }
+        emit(allNotes)
+    }
+
+    suspend fun getStarredNotes() = flow<List<Note>> {
+        val allNotes = ArrayList<Note>()
+        Log.i("Notes", "Before")
+        val snap = firebaseFirestore.collection("users")
+                .document(user?.email!!)
+                .collection("notes")
+                .get()
+                .await()
+        Log.i("Notes", "After")
+        val data = snap.documents
+        for(i in data){
+            if(i["star"] == true && i["trash"] == false && i["archive"] == false){
+                val note = Note(
+                        i.id,
+                        i["title"] as String,
+                        i["content"] as String,
+                        i["star"] as Boolean,
+                        i["archive"] as Boolean,
+                        i["trash"] as Boolean
+                )
+                allNotes.add(note)
+            }
+        }
+        emit(allNotes)
+    }
+
+    suspend fun getTrashNotes() = flow<List<Note>> {
+        val allNotes = ArrayList<Note>()
+        Log.i("Notes", "Before")
+        val snap = firebaseFirestore.collection("users")
+                .document(user?.email!!)
+                .collection("notes")
+                .get()
+                .await()
+        Log.i("Notes", "After")
+        val data = snap.documents
+        for(i in data){
+            if(i["trash"] == true){
+                val note = Note(
+                        i.id,
+                        i["title"] as String,
+                        i["content"] as String,
+                        i["star"] as Boolean,
+                        i["archive"] as Boolean,
+                        i["trash"] as Boolean
+                )
+                allNotes.add(note)
+            }
         }
         emit(allNotes)
     }

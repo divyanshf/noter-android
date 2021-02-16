@@ -15,10 +15,31 @@ constructor(
 ) : ViewModel()
 {
     var mAllNotes : LiveData<List<Note>> = MutableLiveData()
+    var mStarredNotes : LiveData<List<Note>> = MutableLiveData()
+    var mArchivedNotes : LiveData<List<Note>> = MutableLiveData()
+    var mTrashNotes : LiveData<List<Note>> = MutableLiveData()
 
     fun getAllNotes() {
         viewModelScope.launch {
             mAllNotes = notesRepository.getAllNotes().asLiveData()
+        }
+    }
+
+    fun getStarredNotes() {
+        viewModelScope.launch {
+            mStarredNotes = notesRepository.getStarredNotes().asLiveData()
+        }
+    }
+
+    fun getArchivedNotes() {
+        viewModelScope.launch {
+            mArchivedNotes = notesRepository.getArchivedNotes().asLiveData()
+        }
+    }
+
+    fun getTrashNotes() {
+        viewModelScope.launch {
+            mTrashNotes = notesRepository.getTrashNotes().asLiveData()
         }
     }
 

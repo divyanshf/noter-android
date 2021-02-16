@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,7 +24,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
     private lateinit var recyclerView:RecyclerView
     private lateinit var recyclerViewAdapter:NotesAdapter
     private val notesViewModel:NotesViewModel by viewModels()
-//    val notes = ArrayList<Note>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,13 +57,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
             transaction?.commit()
         }
 
-//        notes.add(Note("aaa", "title1", "content1", false, false, false))
-//        notes.add(Note("aab", "title2", "content2", false, false, false))
-//        notes.add(Note("aac", "title3", "content3", false, false, false))
-//        notes.add(Note("aad", "title4", "content4", false, false, false))
-//        notes.add(Note("aae", "title5", "content5", false, false, false))
-
-//        recyclerViewAdapter.setNotes(notes)
         notesViewModel.getAllNotes()
         notesViewModel.mAllNotes.observe(viewLifecycleOwner, {
             Log.i("Notes", it.toString())
@@ -88,6 +81,6 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
     }
 
     override fun onItemClick(position: Int, view: View?) {
-        Log.i("CLICK", position.toString())
+        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
     }
 }
