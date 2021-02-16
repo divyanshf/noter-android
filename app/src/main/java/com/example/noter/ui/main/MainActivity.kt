@@ -108,7 +108,6 @@ class MainActivity : AppCompatActivity() {
     private fun transactFragment(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.content_fragment, fragment)
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 

@@ -13,6 +13,6 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textSize="30sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"/>
 
 </LinearLayout>
