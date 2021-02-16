@@ -24,15 +24,21 @@ class EmptyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_empty)
 
-        var intent = Intent(this, MainActivity::class.java)
+        val mainActivity = Intent(this, MainActivity::class.java)
+        val authActivity = Intent(this, AuthActivity::class.java)
 
         firebaseAuth.addAuthStateListener {
-            Log.i("User", it.currentUser.toString())
             if(it.currentUser == null){
-                intent = Intent(this, AuthActivity::class.java)
+                startActivity(authActivity)
             }
-            startActivity(intent)
+            else{
+                startActivity(mainActivity)
+            }
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        finish()
     }
 }

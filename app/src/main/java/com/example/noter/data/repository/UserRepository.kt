@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserRepository
@@ -17,25 +18,33 @@ constructor(
         emit(firebaseAuth.currentUser)
     }
 
-    fun loginUser(email:String, password:String){
+    suspend fun loginUser(email:String, password:String) : Boolean{
+        var result = false
         firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if(it.isSuccessful){
-                    Log.i("LOGIN", "YES")
-                }else{
-                    Log.i("LOGIN", "${it.exception}")
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        result = true
+                        Log.i("LOGIN", "YES")
+                    }else{
+                        Log.i("LOGIN", "${it.exception}")
+                    }
                 }
-            }
+                .await()
+        return result
     }
 
-    fun registerUser(email:String, password:String){
+    suspend fun registerUser(email:String, password:String): Boolean {
+        var result = false
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if(it.isSuccessful){
+                        result = true
                         Log.i("REGISTER", "YES")
                     }else{
                         Log.i("REGISTER", "${it.exception}")
                     }
                 }
+                .await()
+        return result
     }
 }

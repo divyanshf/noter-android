@@ -16,10 +16,12 @@ class UserViewModel
 constructor(
     private var userRepository: UserRepository
 ): ViewModel() {
-    private var user = userRepository.getUser().asLiveData()
+    var user = userRepository.getUser().asLiveData()
 
-    fun getUser() : LiveData<FirebaseUser?> {
-        return user
+    fun getUser(){
+        viewModelScope.launch {
+            user = userRepository.getUser().asLiveData()
+        }
     }
 
     fun login(email:String, password:String){

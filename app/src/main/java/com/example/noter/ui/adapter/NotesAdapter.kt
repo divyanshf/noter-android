@@ -25,24 +25,8 @@ constructor(
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val currentNote = notes[position]
-        if(currentNote.title.isBlank()){
-            val layoutParams = holder.titleView.layoutParams
-            layoutParams.height = 0
-            holder.titleView.layoutParams = layoutParams
-        }
-        else{
-            holder.titleView.text = currentNote.title
-        }
-
-        if(currentNote.content.isBlank()){
-            val layoutParams = holder.contentView.layoutParams
-            layoutParams.height = 0
-            holder.contentView.layoutParams = layoutParams
-        }
-        else{
-            holder.contentView.text = currentNote.content
-        }
-
+        holder.titleView.text = currentNote.title
+        holder.contentView.text = currentNote.content
     }
 
     override fun getItemCount(): Int {
