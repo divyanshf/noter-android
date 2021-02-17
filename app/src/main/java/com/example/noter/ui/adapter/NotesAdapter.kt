@@ -42,6 +42,10 @@ constructor(
         var titleView:TextView = itemView.findViewById(R.id.note_title)
         var contentView:TextView = itemView.findViewById(R.id.note_content)
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+
         override fun onClick(v: View?) {
             val position = adapterPosition
             listener.onItemClick(position, v)

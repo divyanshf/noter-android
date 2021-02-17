@@ -12,7 +12,7 @@
     <string name="archives">Archives</string>
     <string name="trash">Trash</string>
     <string name="openSource">Open-Source</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
+    <string name="content">Note it down …</string>
 </resources>

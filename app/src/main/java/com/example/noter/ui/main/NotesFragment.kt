@@ -1,5 +1,6 @@
 package com.example.noter.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -15,14 +16,18 @@ import com.example.noter.R
 import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.example.noter.ui.adapter.NotesAdapter
+import com.example.noter.ui.edit.EditActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
     private var toolbar: Toolbar? = null
     private var toolbarHead: EditText? = null
+    private lateinit var fabAdd: FloatingActionButton
     private lateinit var recyclerView:RecyclerView
     private lateinit var recyclerViewAdapter:NotesAdapter
+    private var notes:List<Note> = ArrayList()
     private val notesViewModel:NotesViewModel by viewModels()
 
     override fun onCreateView(
@@ -34,6 +39,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
 
         toolbar = activity?.findViewById(R.id.my_toolbar)
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
+        fabAdd = view.findViewById(R.id.fab_add_note)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext(), this)
 
@@ -57,9 +63,14 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
             transaction?.commit()
         }
 
+        fabAdd.setOnClickListener {
+            val intent = Intent(context, EditActivity::class.java)
+            startActivity(intent)
+        }
+
         notesViewModel.getAllNotes()
         notesViewModel.mAllNotes.observe(viewLifecycleOwner, {
-            Log.i("Notes", it.toString())
+            notes = it
             recyclerViewAdapter.setNotes(it)
         })
 
@@ -81,6 +92,8 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
     }
 
     override fun onItemClick(position: Int, view: View?) {
-        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+        val intent = Intent(context, EditActivity::class.java)
+        intent.putExtra("note", notes[position])
+        startActivity(intent)
     }
 }

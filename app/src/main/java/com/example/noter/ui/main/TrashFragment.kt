@@ -1,5 +1,6 @@
 package com.example.noter.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -12,8 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.noter.R
+import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.example.noter.ui.adapter.NotesAdapter
+import com.example.noter.ui.edit.EditActivity
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +27,7 @@ class TrashFragment : Fragment(), NotesAdapter.OnItemClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
     private val notesViewModel: NotesViewModel by viewModels()
+    private var notes:List<Note> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +46,7 @@ class TrashFragment : Fragment(), NotesAdapter.OnItemClickListener {
 
         notesViewModel.getTrashNotes()
         notesViewModel.mTrashNotes.observe(viewLifecycleOwner, {
-            Log.i("Notes", it.toString())
+            notes = it
             recyclerViewAdapter.setNotes(it)
         })
 
@@ -50,7 +54,8 @@ class TrashFragment : Fragment(), NotesAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int, view: View?) {
-        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+        val intent = Intent(context, EditActivity::class.java)
+        startActivity(intent)
     }
 
 }

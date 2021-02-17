@@ -61,6 +61,14 @@ class MainActivity : AppCompatActivity() {
         initializeFragment()
     }
 
+    override fun onResume() {
+        super.onResume()
+        navigationView.setNavigationItemSelectedListener {
+            onNavItemSelect(it)
+        }
+        initializeFragment()
+    }
+
     private fun initializeFragment(){
         navigationView.setCheckedItem(R.id.all_notes)
         fragment = NotesFragment()
