@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        drawer.closeDrawer(START)
         navigationView.setNavigationItemSelectedListener {
             onNavItemSelect(it)
         }

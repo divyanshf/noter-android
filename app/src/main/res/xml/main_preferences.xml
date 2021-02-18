@@ -6,11 +6,14 @@
         app:key="general"
         app:title="@string/general">
 
-        <SwitchPreferenceCompat
+        <ListPreference
             app:key="theme_preference"
             app:iconSpaceReserved="false"
-            app:defaultValue="true"
-            app:title="@string/dark_theme"/>
+            app:title="@string/theme"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_entry_values"
+            app:dialogTitle="@string/select_theme"
+            app:defaultValue="@string/system_default"/>
 
     </PreferenceCategory>
 

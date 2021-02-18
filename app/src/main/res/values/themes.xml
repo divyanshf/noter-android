@@ -16,6 +16,7 @@
         <!-- Customize your theme here. -->
         <item name="surfaceColor">@color/white</item>
         <item name="colorOnSurface">@color/text_color_light</item>
+        <item name="alertDialogTheme">@style/DialogAppearance</item>
 
     </style>
 </resources>

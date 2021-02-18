@@ -7,4 +7,8 @@
     <style name="TitleAppearance" parent="Theme.Noter">
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="DialogAppearance" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorControlActivated">@color/gold</item>
+        <item name="colorPrimary">@color/gold</item>
+    </style>
 </resources>

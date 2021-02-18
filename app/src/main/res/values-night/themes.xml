@@ -14,5 +14,6 @@
         <item name="android:navigationBarColor" tools:targetApi="l">@android:color/transparent</item>
         <!-- Customize your theme here. -->
         <item name="surfaceColor">@color/grey</item>
+        <item name="alertDialogTheme">@style/DialogAppearance</item>
     </style>
 </resources>
