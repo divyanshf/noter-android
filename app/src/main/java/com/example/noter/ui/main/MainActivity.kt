@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.noter.R
 import com.example.noter.ui.auth.AuthActivity
+import com.example.noter.ui.settings.SettingsActivity
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -102,6 +103,10 @@ class MainActivity : AppCompatActivity() {
                 fragment = TrashFragment()
                 transactFragment()
                 drawer.closeDrawer(START)
+                return true
+            }
+            R.id.settings_item -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
                 return true
             }
             R.id.github_link -> {

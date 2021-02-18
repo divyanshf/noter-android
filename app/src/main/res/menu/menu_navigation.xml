@@ -7,33 +7,41 @@
         <item
             android:id="@+id/all_notes"
             android:title="@string/all_notes"
-            android:icon="@drawable/ic_baseline_note_24"
+            android:icon="@drawable/ic_outline_note_24"
             app:showAsAction="ifRoom|withText"
             android:checkable="true"/>
         <item
             android:id="@+id/starred"
             android:title="@string/starred"
-            android:icon="@drawable/ic_baseline_star_24"
+            android:icon="@drawable/ic_outline_star_outline_24"
             app:showAsAction="ifRoom|withText"
             android:checkable="true"/>
         <item
             android:id="@+id/archives"
             android:title="@string/archives"
-            android:icon="@drawable/ic_baseline_archive_24"
+            android:icon="@drawable/ic_outline_archive_24"
             app:showAsAction="ifRoom|withText"
             android:checkable="true"/>
         <item
             android:id="@+id/trash"
             android:title="@string/trash"
-            android:icon="@drawable/ic_baseline_delete_24"
+            android:icon="@drawable/ic_outline_delete_24"
             app:showAsAction="ifRoom|withText"
             android:checkable="true"/>
     </group>
     <group
-        android:id="@+id/menu_group_link">
+        android:id="@+id/menu_group_settings">
+        <item
+            android:id="@+id/settings_item"
+            android:icon="@drawable/ic_outline_settings_24"
+            android:title="@string/action_settings"
+            app:showAsAction="ifRoom|withText"/>
+    </group>
+    <group
+        android:id="@+id/menu_group_open_source">
         <item
             android:id="@+id/github_link"
-            android:icon="@drawable/ic_baseline_github_24"
+            android:icon="@drawable/github"
             android:title="@string/openSource"
             app:showAsAction="ifRoom|withText"/>
     </group>

@@ -69,6 +69,7 @@ class SearchFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.findItem(R.id.menu_search).isVisible = false
+        menu.findItem(R.id.account).isVisible = false
         super.onCreateOptionsMenu(menu, inflater)
     }
 

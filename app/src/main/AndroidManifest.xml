@@ -10,7 +10,8 @@
         android:roundIcon="@drawable/ic_baseline_local_library_24"
         android:supportsRtl="true"
         android:theme="@style/Theme.Noter">
-        <activity android:name=".ui.edit.EditActivity"></activity>
+        <activity android:name=".ui.settings.SettingsActivity"></activity>
+        <activity android:name=".ui.edit.EditActivity" />
         <activity android:name=".ui.EmptyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.AuthActivity"></activity>
+        <activity android:name=".ui.auth.AuthActivity" />
         <activity android:name=".ui.main.MainActivity" />
     </application>
 
