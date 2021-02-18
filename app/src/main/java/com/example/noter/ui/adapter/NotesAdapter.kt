@@ -26,7 +26,19 @@ constructor(
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val currentNote = notes[position]
         holder.titleView.text = currentNote.title
-        holder.contentView.text = currentNote.content
+        if(currentNote.content?.length!! in 201..299){
+            var text = currentNote.content.substring(0, 200)
+            text = "$text ..."
+            holder.contentView.text = text
+        }
+        else if(currentNote.content.length >= 300){
+            var text = currentNote.content.substring(0, 300)
+            text = "$text ..."
+            holder.contentView.text = text
+        }
+        else{
+            holder.contentView.text = currentNote.content
+        }
     }
 
     override fun getItemCount(): Int {
