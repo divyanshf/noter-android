@@ -6,4 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.SettingsActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/setting_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintBottom_toTopOf="@+id/preference_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/preference_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setting_app_bar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

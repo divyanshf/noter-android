@@ -7,12 +7,25 @@
     <string name="menu_search">Search your notes . . .</string>
     <string name="open">Open Drawer</string>
     <string name="close">Close Drawer</string>
+
     <string name="all_notes">Notes</string>
     <string name="starred">Starred</string>
     <string name="archives">Archives</string>
     <string name="trash">Trash</string>
     <string name="openSource">Open-Source</string>
+
     <string name="add_note">Add Note</string>
     <string name="title">Title</string>
     <string name="content">Note it down …</string>
+
+    <string name="general">General</string>
+    <string name="about">About</string>
+    <string name="theme">Theme</string>
+    <string name="select_theme">Select a theme for the app</string>
+    <string name="system_theme">System Default</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="system_default">system</string>
+    <string name="light">light</string>
+    <string name="dark">dark</string>
 </resources>
