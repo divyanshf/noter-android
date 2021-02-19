@@ -19,6 +19,24 @@ constructor(
     var mArchivedNotes : LiveData<List<Note>> = MutableLiveData()
     var mTrashNotes : LiveData<List<Note>> = MutableLiveData()
 
+    fun insert(note:Note){
+        viewModelScope.launch {
+            notesRepository.insertNote(note)
+        }
+    }
+
+    fun updateNote(note:Note){
+        viewModelScope.launch {
+            notesRepository.updateNote(note)
+        }
+    }
+
+    fun deleteNote(note:Note){
+        viewModelScope.launch {
+            notesRepository.deleteNote(note)
+        }
+    }
+
     fun getAllNotes() {
         viewModelScope.launch {
             mAllNotes = notesRepository.getAllNotes().asLiveData()

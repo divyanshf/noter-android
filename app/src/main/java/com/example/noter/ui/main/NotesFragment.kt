@@ -21,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
+class NotesFragment : Fragment(){
     private var toolbar: Toolbar? = null
     private var toolbarHead: EditText? = null
     private var fabAdd: FloatingActionButton? = null
@@ -42,7 +42,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
         fabAdd = activity?.findViewById(R.id.fab_add_note)
         recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerViewAdapter = NotesAdapter(requireContext(), this)
+        recyclerViewAdapter = NotesAdapter(requireContext())
 
         toolbar?.title = null
         toolbarHead?.isFocusable = false
@@ -93,11 +93,5 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
         toolbarHeadLayout?.width = 0
         toolbarHead?.layoutParams = toolbarHeadLayout
         fabAdd?.visibility = View.INVISIBLE
-    }
-
-    override fun onItemClick(position: Int, view: View?) {
-        val intent = Intent(context, EditActivity::class.java)
-        intent.putExtra("note", notes[position])
-        startActivity(intent)
     }
 }

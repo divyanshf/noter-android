@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TrashFragment : Fragment(), NotesAdapter.OnItemClickListener {
+class TrashFragment : Fragment() {
     private var toolbar: Toolbar? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
@@ -38,7 +38,7 @@ class TrashFragment : Fragment(), NotesAdapter.OnItemClickListener {
         toolbar = activity?.findViewById(R.id.my_toolbar)
         toolbar?.setTitle(R.string.trash)
         recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerViewAdapter = NotesAdapter(requireContext(), this)
+        recyclerViewAdapter = NotesAdapter(requireContext())
 
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter
@@ -50,11 +50,6 @@ class TrashFragment : Fragment(), NotesAdapter.OnItemClickListener {
         })
 
         return view
-    }
-
-    override fun onItemClick(position: Int, view: View?) {
-        val intent = Intent(context, EditActivity::class.java)
-        startActivity(intent)
     }
 
 }

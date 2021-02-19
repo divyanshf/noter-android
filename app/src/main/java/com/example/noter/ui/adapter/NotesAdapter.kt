@@ -1,19 +1,21 @@
 package com.example.noter.ui.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noter.R
 import com.example.noter.data.model.Note
+import com.example.noter.ui.edit.EditActivity
 
 class NotesAdapter
 constructor(
         val context:Context,
-        val listener: OnItemClickListener
         ) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
     private val mInflater = LayoutInflater.from(context)
     private var notes:List<Note> = ArrayList()
@@ -60,11 +62,9 @@ constructor(
 
         override fun onClick(v: View?) {
             val position = adapterPosition
-            listener.onItemClick(position, v)
+            val intent = Intent(context, EditActivity::class.java)
+            intent.putExtra("note", notes[position])
+            context.startActivity(intent)
         }
-    }
-
-    interface OnItemClickListener{
-        fun onItemClick(position: Int, view:View?)
     }
 }

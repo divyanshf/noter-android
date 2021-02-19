@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ArchivesFragment : Fragment(), NotesAdapter.OnItemClickListener {
+class ArchivesFragment : Fragment() {
     private var toolbar:Toolbar? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
@@ -41,7 +41,7 @@ class ArchivesFragment : Fragment(), NotesAdapter.OnItemClickListener {
         toolbar = activity?.findViewById(R.id.my_toolbar)
         toolbar?.setTitle(R.string.archives)
         recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerViewAdapter = NotesAdapter(requireContext(), this)
+        recyclerViewAdapter = NotesAdapter(requireContext())
 
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter
@@ -52,11 +52,6 @@ class ArchivesFragment : Fragment(), NotesAdapter.OnItemClickListener {
             recyclerViewAdapter.setNotes(it)
         })
         return view
-    }
-
-    override fun onItemClick(position: Int, view: View?) {
-        val intent = Intent(context, EditActivity::class.java)
-        startActivity(intent)
     }
 
 }
