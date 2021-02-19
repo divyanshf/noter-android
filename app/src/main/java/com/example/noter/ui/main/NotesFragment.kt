@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,7 +17,6 @@ import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.example.noter.ui.adapter.NotesAdapter
 import com.example.noter.ui.edit.EditActivity
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
     private var toolbar: Toolbar? = null
     private var toolbarHead: EditText? = null
-    private lateinit var fabAdd: FloatingActionButton
+    private var fabAdd: FloatingActionButton? = null
     private lateinit var recyclerView:RecyclerView
     private lateinit var recyclerViewAdapter:NotesAdapter
     private var notes:List<Note> = ArrayList()
@@ -42,7 +40,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
 
         toolbar = activity?.findViewById(R.id.my_toolbar)
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
-        fabAdd = view.findViewById(R.id.fab_add_note)
+        fabAdd = activity?.findViewById(R.id.fab_add_note)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext(), this)
 
@@ -67,7 +65,8 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
             transaction?.commit()
         }
 
-        fabAdd.setOnClickListener {
+        fabAdd?.visibility = View.VISIBLE
+        fabAdd?.setOnClickListener {
             val intent = Intent(context, EditActivity::class.java)
             startActivity(intent)
         }
@@ -93,6 +92,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
         val toolbarHeadLayout = toolbarHead?.layoutParams
         toolbarHeadLayout?.width = 0
         toolbarHead?.layoutParams = toolbarHeadLayout
+        fabAdd?.visibility = View.INVISIBLE
     }
 
     override fun onItemClick(position: Int, view: View?) {
