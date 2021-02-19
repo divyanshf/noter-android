@@ -25,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ArchivesFragment : Fragment(), NotesAdapter.OnItemClickListener {
-    private var toolbarHead: EditText? = null
     private var toolbar:Toolbar? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
@@ -37,7 +36,7 @@ class ArchivesFragment : Fragment(), NotesAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_archives, container, false)
+        val view = inflater.inflate(R.layout.fragment_notes, container, false)
 
         toolbar = activity?.findViewById(R.id.my_toolbar)
         toolbar?.setTitle(R.string.archives)
