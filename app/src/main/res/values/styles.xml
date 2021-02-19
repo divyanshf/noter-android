@@ -11,4 +11,7 @@
         <item name="colorControlActivated">@color/gold</item>
         <item name="colorPrimary">@color/gold</item>
     </style>
+    <style name="BottomAppBarAppearance" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:colorPrimary">@color/white</item>
+    </style>
 </resources>

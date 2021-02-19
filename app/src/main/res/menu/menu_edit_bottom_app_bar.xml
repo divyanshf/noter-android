@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/star_menu_item"
+        android:title="@string/starred"
+        android:icon="@drawable/ic_baseline_star_24"
+        android:checkable="true"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/archive_menu_item"
+        android:title="@string/archives"
+        android:icon="@drawable/ic_baseline_archive_24"
+        android:checkable="true"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/trash_menu_item"
+        android:title="@string/trash"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:checkable="true"
+        app:showAsAction="ifRoom"/>
+</menu>

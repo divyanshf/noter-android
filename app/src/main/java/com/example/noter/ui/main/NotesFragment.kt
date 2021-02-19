@@ -1,5 +1,6 @@
 package com.example.noter.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.example.noter.ui.adapter.NotesAdapter
 import com.example.noter.ui.edit.EditActivity
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,6 +32,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
     private var notes:List<Note> = ArrayList()
     private val notesViewModel:NotesViewModel by viewModels()
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
