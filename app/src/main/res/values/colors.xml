@@ -9,6 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gold">#FFC93C</color>
     <color name="grey">#333333</color>
+    <color name="background_black">#2a2a2a</color>
     <color name="text_color_light">#939393</color>
-    <color name="background_black">#121212</color>
 </resources>

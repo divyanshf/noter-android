@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:gravity="start"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,11 +15,12 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/corner_background_toolbar"
             android:elevation="5dp"
             app:titleTextAppearance="@style/TitleAppearance"
+            android:background="@drawable/corner_background_toolbar"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
-            app:popupTheme="@style/Theme.MaterialComponents.DayNight">
+            app:popupTheme="@style/Theme.MaterialComponents.DayNight"
+            app:layout_scrollFlags="scroll|enterAlways" >
 
             <EditText
                 android:id="@+id/toolbar_head_edit"
@@ -37,9 +38,10 @@
             android:layout_below="@id/my_toolbar"
             android:layout_marginHorizontal="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    </RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"

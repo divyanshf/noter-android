@@ -18,5 +18,6 @@
         <item name="colorOnSurface">@color/text_color_light</item>
         <item name="alertDialogTheme">@style/DialogAppearance</item>
 
+        <item name="actionBarSize">50dp</item>
     </style>
 </resources>

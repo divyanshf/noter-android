@@ -53,6 +53,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener{
         val toolbarHeadLayout = toolbarHead?.layoutParams
         toolbarHeadLayout?.width = ViewGroup.LayoutParams.MATCH_PARENT
         toolbarHead?.layoutParams = toolbarHeadLayout
+        Log.i("Back", toolbar?.background.toString())
 
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter

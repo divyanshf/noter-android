@@ -2,6 +2,7 @@
 <resources>
     <style name="DrawerAppearance" parent="Theme.Noter">
         <item name="colorPrimary">@color/gold</item>
+        <item name="colorSurface">?android:attr/colorBackground</item>
         <item name="colorControlHighlight">@color/gold</item>
     </style>
     <style name="TitleAppearance" parent="Theme.Noter">
