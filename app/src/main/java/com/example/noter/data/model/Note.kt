@@ -2,18 +2,14 @@ package com.example.noter.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
-@Entity(tableName = "note")
 data class Note(
-        @PrimaryKey @NotNull val id: String?,
-        val title: String?,
-        val content: String?,
-        val starred:Boolean,
-        val archived:Boolean,
-        val trash:Boolean
+        var id: String?,
+        var title: String?,
+        var content: String?,
+        var starred:Boolean,
+        var archived:Boolean,
+        var trash:Boolean
 ) : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readString(),
