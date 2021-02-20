@@ -47,4 +47,12 @@ class ArchivesFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        notesViewModel.getArchivedNotes()
+        notesViewModel.mArchivedNotes.observe(viewLifecycleOwner, {
+            notes = it
+            recyclerViewAdapter.setNotes(it)
+        })
+        super.onResume()
+    }
 }

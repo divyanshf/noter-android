@@ -138,30 +138,34 @@ class EditActivity : AppCompatActivity() {
     private fun setMenuOptions(menu:Menu?){
         //  Star
         if(note.starred){
+            menu?.findItem(R.id.star_menu_item)?.title = "Unstar"
             menu?.findItem(R.id.star_menu_item)?.setIcon(R.drawable.ic_baseline_star_24)
         }
         else{
+            menu?.findItem(R.id.star_menu_item)?.title = "Star"
             menu?.findItem(R.id.star_menu_item)?.setIcon(R.drawable.ic_outline_star_outline_24)
         }
 
         //  Archive
         if(note.archived){
-            menu?.findItem(R.id.archive_menu_item)?.setIcon(R.drawable.ic_baseline_archive_24)
+            menu?.findItem(R.id.archive_menu_item)?.title = "Unarchive"
+            menu?.findItem(R.id.archive_menu_item)?.setIcon(R.drawable.ic_baseline_unarchive_24)
         }
         else{
+            menu?.findItem(R.id.archive_menu_item)?.title = "Archive"
             menu?.findItem(R.id.archive_menu_item)?.setIcon(R.drawable.ic_outline_archive_24)
         }
 
         //  Trash
         if(note.trash){
             menu?.findItem(R.id.trash_menu_item)?.title = "Restore note"
-            menu?.findItem(R.id.trash_menu_item)?.setIcon(R.drawable.ic_baseline_delete_24)
+            menu?.findItem(R.id.trash_menu_item)?.setIcon(R.drawable.ic_baseline_restore_from_trash_24)
             menu?.findItem(R.id.star_menu_item)?.isVisible = false
             menu?.findItem(R.id.archive_menu_item)?.isVisible = false
         }
         else{
+            menu?.findItem(R.id.trash_menu_item)?.title = "Delete note"
             menu?.findItem(R.id.trash_menu_item)?.setIcon(R.drawable.ic_outline_delete_24)
-            menu?.findItem(R.id.trash_menu_item)?.title = "Restore note"
             menu?.findItem(R.id.trash_permanent_menu_item)?.isVisible = false
         }
     }

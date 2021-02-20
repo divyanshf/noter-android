@@ -48,4 +48,13 @@ class TrashFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        notesViewModel.getTrashNotes()
+        notesViewModel.mTrashNotes.observe(viewLifecycleOwner, {
+            notes = it
+            recyclerViewAdapter.setNotes(it)
+        })
+        super.onResume()
+    }
+
 }

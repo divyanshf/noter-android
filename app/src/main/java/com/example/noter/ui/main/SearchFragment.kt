@@ -91,12 +91,10 @@ class SearchFragment : Fragment() {
 
     private fun search(text:String){
         if(text != ""){
-            Log.i("Search", "true")
             notesViewModel.searchNotes(text)
 
             try {
                 notesViewModel.mSearchNotes.observe(viewLifecycleOwner, {
-                    Log.i("Search Observer", "$it notes")
                     notes = it
                     recyclerViewAdapter.setNotes(it)
                 })
@@ -105,6 +103,11 @@ class SearchFragment : Fragment() {
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun onResume() {
+        search(toolbarHead?.text.toString())
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -146,6 +149,7 @@ class SearchFragment : Fragment() {
                 Log.i("BACK", "true")
                 hideKeyboard()
                 toolbar?.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
+                notesViewModel.mSearchNotes.removeObservers(viewLifecycleOwner)
                 navigationView?.setCheckedItem(R.id.all_notes)
                 val transaction = activity?.supportFragmentManager?.beginTransaction()
                 val fragment = NotesFragment()

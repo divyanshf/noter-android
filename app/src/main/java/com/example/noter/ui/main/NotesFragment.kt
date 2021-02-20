@@ -82,6 +82,15 @@ class NotesFragment : Fragment(){
         return view
     }
 
+    override fun onResume() {
+        notesViewModel.getAllNotes()
+        notesViewModel.mAllNotes.observe(viewLifecycleOwner, {
+            notes = it
+            recyclerViewAdapter.setNotes(it)
+        })
+        super.onResume()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.findItem(R.id.menu_search).isVisible = false
         super.onCreateOptionsMenu(menu, inflater)

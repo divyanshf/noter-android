@@ -47,4 +47,13 @@ class StarredFragment : Fragment() {
 
         return view
     }
+
+    override fun onResume() {
+        notesViewModel.getStarredNotes()
+        notesViewModel.mStarredNotes.observe(viewLifecycleOwner, {
+            notes = it
+            recyclerViewAdapter.setNotes(it)
+        })
+        super.onResume()
+    }
 }
