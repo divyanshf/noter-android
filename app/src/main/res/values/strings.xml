@@ -13,7 +13,10 @@
     <string name="all_notes">Notes</string>
     <string name="starred">Starred</string>
     <string name="archives">Archives</string>
+    <string name="delete">Delete</string>
     <string name="trash">Trash</string>
+    <string name="restore">Restore</string>
+    <string name="delete_permanent">Delete Forever</string>
     <string name="openSource">Open-Source</string>
 
     <string name="add_note">Add Note</string>

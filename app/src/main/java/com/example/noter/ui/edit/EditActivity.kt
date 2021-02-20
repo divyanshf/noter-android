@@ -1,8 +1,11 @@
 package com.example.noter.ui.edit
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -21,8 +24,7 @@ class EditActivity : AppCompatActivity() {
     private lateinit var bottomAppBar: BottomAppBar
     private var intentNote:Note? = null
     private var prepopulate = false
-    private var title = ""
-    private var content = ""
+    private var note:Note = Note("", "", "", starred = false, archived = false, trash = false)
     private val notesViewModel:NotesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,27 +39,24 @@ class EditActivity : AppCompatActivity() {
         try {
             intentNote = intent.getParcelableExtra("note")!!
             prepopulate = true
-            title = intentNote?.title!!
-            content = intentNote?.content!!
+            note = intentNote!!
         }catch (e:Exception){
             e.printStackTrace()
         }
 
-        titleEditText.setText(title)
-        contentEditText.setText(content)
+        titleEditText.setText(note.title)
+        contentEditText.setText(note.content)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title = title
+        supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
         titleEditText.doOnTextChanged { text, _, _, _ ->
-            title = text.toString()
-            supportActionBar?.title = title
+            note.title = text.toString()
         }
 
         contentEditText.doOnTextChanged { text, _, _, _ ->
-            content = text.toString()
+            note.content = text.toString()
         }
     }
 
@@ -66,10 +65,56 @@ class EditActivity : AppCompatActivity() {
         saveNote()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_edit_toolbar, menu)
+        setMenuOptions(menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             android.R.id.home -> {
                 saveNote()
+                finish()
+                true
+            }
+            R.id.star_menu_item -> {
+                note.starred = !note.starred
+                if(note.starred){
+                    Toast.makeText(this, "Note starred", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(this, "Note unstarred", Toast.LENGTH_SHORT).show()
+                }
+                invalidateOptionsMenu()
+                true
+            }
+            R.id.archive_menu_item -> {
+                note.archived = !note.archived
+                if(note.archived){
+                    Toast.makeText(this, "Note archived", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(this, "Note unarchived", Toast.LENGTH_SHORT).show()
+                }
+                saveNote()
+                finish()
+                true
+            }
+            R.id.trash_menu_item -> {
+                note.trash = !note.trash
+                if(note.trash){
+                    Toast.makeText(this, "Note trashed", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(this, "Note restored", Toast.LENGTH_SHORT).show()
+                }
+                saveNote()
+                finish()
+                true
+            }
+            R.id.trash_permanent_menu_item -> {
+                notesViewModel.deleteNote(note)
                 finish()
                 true
             }
@@ -81,17 +126,47 @@ class EditActivity : AppCompatActivity() {
     private fun saveNote(){
         when(prepopulate){
             true -> {
-                if(title != intentNote?.title || content != intentNote?.content){
-                    val newNote = Note(intentNote?.id, title, content, intentNote?.starred!!, intentNote?.archived!!, intentNote?.trash!!)
-                    notesViewModel.updateNote(newNote)
-                }
+                Log.i("Note", "${note.trash}");
+                notesViewModel.updateNote(note)
             }
             false -> {
-                if(title.isNotEmpty() || content.isNotEmpty()){
-                    val newNote = Note("", title, content, false, false, false)
-                    notesViewModel.insert(newNote)
+                Log.i("Note", "Not intent");
+                if(note.title?.isNotBlank()!! || note.content?.isNotBlank()!!){
+                    Log.i("Note", "Inserted");
+                    notesViewModel.insert(note)
                 }
             }
+        }
+    }
+
+    private fun setMenuOptions(menu:Menu?){
+        //  Star
+        if(note.starred){
+            menu?.findItem(R.id.star_menu_item)?.setIcon(R.drawable.ic_baseline_star_24)
+        }
+        else{
+            menu?.findItem(R.id.star_menu_item)?.setIcon(R.drawable.ic_outline_star_outline_24)
+        }
+
+        //  Archive
+        if(note.archived){
+            menu?.findItem(R.id.archive_menu_item)?.setIcon(R.drawable.ic_baseline_archive_24)
+        }
+        else{
+            menu?.findItem(R.id.archive_menu_item)?.setIcon(R.drawable.ic_outline_archive_24)
+        }
+
+        //  Trash
+        if(note.trash){
+            menu?.findItem(R.id.trash_menu_item)?.title = "Restore note"
+            menu?.findItem(R.id.trash_menu_item)?.setIcon(R.drawable.ic_baseline_delete_24)
+            menu?.findItem(R.id.star_menu_item)?.isVisible = false
+            menu?.findItem(R.id.archive_menu_item)?.isVisible = false
+        }
+        else{
+            menu?.findItem(R.id.trash_menu_item)?.setIcon(R.drawable.ic_outline_delete_24)
+            menu?.findItem(R.id.trash_menu_item)?.title = "Restore note"
+            menu?.findItem(R.id.trash_permanent_menu_item)?.isVisible = false
         }
     }
 }

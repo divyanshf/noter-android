@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/submit_menu_item"
-        android:title="@string/done"
-        android:icon="@drawable/ic_baseline_done_24"
-        app:showAsAction="always"/>
+    <item
+        android:id="@+id/star_menu_item"
+        android:title="@string/starred"
+        android:icon="@drawable/ic_outline_star_outline_24"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/archive_menu_item"
+        android:title="@string/archives"
+        android:icon="@drawable/ic_outline_archive_24"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/trash_menu_item"
+        android:title="@string/delete"
+        android:icon="@drawable/ic_outline_delete_24"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/trash_permanent_menu_item"
+        android:title="@string/delete_permanent"
+        android:icon="@drawable/ic_baseline_delete_forever_24"
+        app:showAsAction="ifRoom"/>
 </menu>
