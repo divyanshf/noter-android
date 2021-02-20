@@ -37,4 +37,8 @@ constructor(
     suspend fun getTrashNotes() : Flow<List<Note>>{
         return notesRemoteDataSource.getTrashNotes()
     }
+
+    suspend fun searchNotes(query:String) : Flow<List<Note>>{
+        return notesRemoteDataSource.searchNotes(query)
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.noter.data.sources
 
+import android.util.Log
 import com.example.noter.data.model.Note
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -75,6 +76,22 @@ constructor(
                 .await()
 
         emit(createArrayFromMap(snap.documents))
+    }
+
+    suspend fun searchNotes(query:String) = flow {
+        val snap = notesCollection
+                .get()
+                .await()
+
+        val snapDocuments = snap
+                .documents
+                .filter {
+                    it["title"].toString().contains(query, true) || it["content"].toString().contains(query, true)
+                }
+
+        val searchResult = createArrayFromMap(snapDocuments as MutableList<DocumentSnapshot>)
+        Log.i("Search", "$searchResult")
+        emit(searchResult)
     }
 
     private fun createArrayFromMap(documents: MutableList<DocumentSnapshot>): List<Note>{

@@ -11,7 +11,15 @@ import androidx.fragment.app.Fragment
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.noter.R
+import com.example.noter.data.model.Note
+import com.example.noter.data.viewmodel.NotesViewModel
+import com.example.noter.ui.adapter.NotesAdapter
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +29,10 @@ class SearchFragment : Fragment() {
     private var toolbarHead: EditText? = null
     private var sharedPreferences:SharedPreferences? = null
     private var navigationView:NavigationView? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewAdapter: NotesAdapter
+    private val notesViewModel: NotesViewModel by viewModels()
+    private var notes:List<Note> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,6 +48,12 @@ class SearchFragment : Fragment() {
 
         toolbarHead?.isFocusable = true
         toolbarHead?.isFocusableInTouchMode = true
+
+        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerViewAdapter = NotesAdapter(requireContext())
+
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        recyclerView.adapter = recyclerViewAdapter
 
         toolbar?.title = null
         toolbarHead?.requestFocus()
@@ -60,11 +78,33 @@ class SearchFragment : Fragment() {
             openKeyboard()
         }
 
+        toolbarHead?.doOnTextChanged { text, _, _, _ ->
+            search(text.toString())
+        }
+
         toolbar?.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
         setHasOptionsMenu(true)
 
         return view
+    }
+
+    private fun search(text:String){
+        if(text != ""){
+            Log.i("Search", "true")
+            notesViewModel.searchNotes(text)
+
+            try {
+                notesViewModel.mSearchNotes.observe(viewLifecycleOwner, {
+                    Log.i("Search Observer", "$it notes")
+                    notes = it
+                    recyclerViewAdapter.setNotes(it)
+                })
+            }
+            catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -84,8 +124,9 @@ class SearchFragment : Fragment() {
         toolbarHead?.layoutParams = toolbarHeadLayout
 
         val dp10 = getPixel(10F)
+        val dp15 = getPixel(15F)
         val marginParamas = toolbar?.layoutParams as ViewGroup.MarginLayoutParams
-        marginParamas.setMargins(dp10, dp10, dp10, dp10)
+        marginParamas.setMargins(dp15, dp10, dp15, dp10)
         toolbar?.setBackgroundResource(R.drawable.corner_background_toolbar)
 
     }

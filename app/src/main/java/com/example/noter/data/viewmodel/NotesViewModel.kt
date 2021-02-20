@@ -18,6 +18,7 @@ constructor(
     var mStarredNotes : LiveData<List<Note>> = MutableLiveData()
     var mArchivedNotes : LiveData<List<Note>> = MutableLiveData()
     var mTrashNotes : LiveData<List<Note>> = MutableLiveData()
+    var mSearchNotes : LiveData<List<Note>> = MutableLiveData()
 
     fun insert(note:Note){
         viewModelScope.launch {
@@ -58,6 +59,12 @@ constructor(
     fun getTrashNotes() {
         viewModelScope.launch {
             mTrashNotes = notesRepository.getTrashNotes().asLiveData()
+        }
+    }
+
+    fun searchNotes(query:String){
+        viewModelScope.launch {
+            mSearchNotes = notesRepository.searchNotes(query).asLiveData()
         }
     }
 
