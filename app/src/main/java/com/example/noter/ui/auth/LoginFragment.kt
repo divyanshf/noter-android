@@ -2,19 +2,14 @@ package com.example.noter.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import com.example.noter.R
-import com.example.noter.data.repository.UserRepository
 import com.example.noter.data.viewmodel.UserViewModel
 import com.example.noter.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -61,7 +56,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun removeSpacing():String{
-        var email = emailEditText.text.toString()
+        val email = emailEditText.text.toString()
         return email.filter {
             it != ' '
         }

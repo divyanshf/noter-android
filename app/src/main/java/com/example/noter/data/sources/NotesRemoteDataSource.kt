@@ -4,7 +4,6 @@ import com.example.noter.data.model.Note
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -12,8 +11,8 @@ import javax.inject.Inject
 class NotesRemoteDataSource
 @Inject
 constructor(
-        private var firebaseFirestore: FirebaseFirestore,
-        private var firebaseAuth: FirebaseAuth
+        firebaseFirestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
 )
 {
     private var user = firebaseAuth.currentUser
@@ -38,7 +37,7 @@ constructor(
                 .await()
     }
 
-    suspend fun getAllNotes() = flow<List<Note>> {
+    suspend fun getAllNotes() = flow {
         val snap = notesCollection
                 .whereEqualTo("trash", false)
                 .whereEqualTo("archive", false)
@@ -48,7 +47,7 @@ constructor(
         emit(createArrayFromMap(snap.documents))
     }
 
-    suspend fun getArchivedNotes() = flow<List<Note>> {
+    suspend fun getArchivedNotes() = flow {
         val snap = notesCollection
                 .whereEqualTo("trash", false)
                 .whereEqualTo("archive", true)
@@ -58,7 +57,7 @@ constructor(
         emit(createArrayFromMap(snap.documents))
     }
 
-    suspend fun getStarredNotes() = flow<List<Note>> {
+    suspend fun getStarredNotes() = flow {
         val snap = notesCollection
                 .whereEqualTo("star", true)
                 .whereEqualTo("trash", false)
@@ -69,7 +68,7 @@ constructor(
         emit(createArrayFromMap(snap.documents))
     }
 
-    suspend fun getTrashNotes() = flow<List<Note>> {
+    suspend fun getTrashNotes() = flow {
         val snap = notesCollection
                 .whereEqualTo("trash", true)
                 .get()

@@ -5,9 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noter.R
 import com.example.noter.data.model.Note
@@ -28,18 +26,20 @@ constructor(
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val currentNote = notes[position]
         holder.titleView.text = currentNote.title
-        if(currentNote.content?.length!! in 201..299){
-            var text = currentNote.content!!.substring(0, 200)
-            text = "$text ..."
-            holder.contentView.text = text
-        }
-        else if(currentNote.content!!.length >= 300){
-            var text = currentNote.content!!.substring(0, 300)
-            text = "$text ..."
-            holder.contentView.text = text
-        }
-        else{
-            holder.contentView.text = currentNote.content
+        when {
+            currentNote.content?.length!! in 201..299 -> {
+                var text = currentNote.content!!.substring(0, 200)
+                text = "$text ..."
+                holder.contentView.text = text
+            }
+            currentNote.content!!.length >= 300 -> {
+                var text = currentNote.content!!.substring(0, 300)
+                text = "$text ..."
+                holder.contentView.text = text
+            }
+            else -> {
+                holder.contentView.text = currentNote.content
+            }
         }
     }
 

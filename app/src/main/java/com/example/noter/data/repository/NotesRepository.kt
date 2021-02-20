@@ -8,7 +8,7 @@ import javax.inject.Inject
 class NotesRepository
 @Inject
 constructor(
-        private var notesRemoteDataSource: NotesRemoteDataSource
+        private val notesRemoteDataSource: NotesRemoteDataSource
 ){
     suspend fun insertNote(note:Note){
         notesRemoteDataSource.insertNote(note)

@@ -126,13 +126,10 @@ class EditActivity : AppCompatActivity() {
     private fun saveNote(){
         when(prepopulate){
             true -> {
-                Log.i("Note", "${note.trash}");
                 notesViewModel.updateNote(note)
             }
             false -> {
-                Log.i("Note", "Not intent");
                 if(note.title?.isNotBlank()!! || note.content?.isNotBlank()!!){
-                    Log.i("Note", "Inserted");
                     notesViewModel.insert(note)
                 }
             }

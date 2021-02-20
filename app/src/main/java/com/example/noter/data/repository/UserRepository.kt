@@ -2,8 +2,6 @@ package com.example.noter.data.repository
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -11,10 +9,9 @@ import javax.inject.Inject
 class UserRepository
 @Inject
 constructor(
-    private var firebaseFirestore: FirebaseFirestore,
-    private var firebaseAuth: FirebaseAuth
+        private val firebaseAuth: FirebaseAuth
 ){
-    fun getUser() = flow<FirebaseUser?> {
+    fun getUser() = flow {
         emit(firebaseAuth.currentUser)
     }
 
