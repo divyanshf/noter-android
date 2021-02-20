@@ -103,6 +103,9 @@ class SearchFragment : Fragment() {
                 e.printStackTrace()
             }
         }
+        else{
+            recyclerViewAdapter.setNotes(ArrayList())
+        }
     }
 
     override fun onResume() {
@@ -125,6 +128,8 @@ class SearchFragment : Fragment() {
         val toolbarHeadLayout = toolbarHead?.layoutParams
         toolbarHeadLayout?.width = 0
         toolbarHead?.layoutParams = toolbarHeadLayout
+
+        notesViewModel.mSearchNotes.removeObservers(viewLifecycleOwner)
 
         val dp10 = getPixel(10F)
         val dp15 = getPixel(15F)
@@ -149,7 +154,6 @@ class SearchFragment : Fragment() {
                 Log.i("BACK", "true")
                 hideKeyboard()
                 toolbar?.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
-                notesViewModel.mSearchNotes.removeObservers(viewLifecycleOwner)
                 navigationView?.setCheckedItem(R.id.all_notes)
                 val transaction = activity?.supportFragmentManager?.beginTransaction()
                 val fragment = NotesFragment()

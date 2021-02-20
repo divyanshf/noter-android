@@ -80,6 +80,8 @@ constructor(
 
     suspend fun searchNotes(query:String) = flow {
         val snap = notesCollection
+                .whereEqualTo("trash", false)
+                .whereEqualTo("archive", false)
                 .get()
                 .await()
 

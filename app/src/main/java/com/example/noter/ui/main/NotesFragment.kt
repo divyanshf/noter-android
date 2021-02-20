@@ -97,10 +97,10 @@ class NotesFragment : Fragment(){
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         val toolbarHeadLayout = toolbarHead?.layoutParams
         toolbarHeadLayout?.width = 0
         toolbarHead?.layoutParams = toolbarHeadLayout
         fabAdd?.visibility = View.INVISIBLE
+        super.onDestroyView()
     }
 }
