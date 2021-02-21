@@ -13,6 +13,7 @@
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_entry_values"
             app:dialogTitle="@string/select_theme"
+            app:summary="%s"
             app:defaultValue="@string/system_default"/>
 
     </PreferenceCategory>

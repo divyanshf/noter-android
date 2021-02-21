@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             onNavItemSelect(it)
         }
+        initializeFragment()
     }
 
     private fun initializeFragment(){

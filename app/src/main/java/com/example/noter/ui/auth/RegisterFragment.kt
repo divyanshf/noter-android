@@ -22,9 +22,11 @@ class RegisterFragment : Fragment() {
     private val userViewModel:UserViewModel by viewModels()
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var cnfPasswordEditText: EditText
+    private var name = ""
     private var email = ""
     private var password = ""
     private var cnfPassword = ""
@@ -36,13 +38,14 @@ class RegisterFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_register, container, false)
 
+        nameEditText = view.findViewById(R.id.name_edit_text)
         emailEditText = view.findViewById(R.id.email_edit_text)
         passwordEditText = view.findViewById(R.id.password_edit_text)
         cnfPasswordEditText = view.findViewById(R.id.cnf_password_edit_text)
 
         view.findViewById<Button>(R.id.register_button).setOnClickListener {
             if(validate()){
-                userViewModel.register(email, password)
+                userViewModel.register(name, email, password)
                 checkUser()
             }
         }
@@ -67,9 +70,12 @@ class RegisterFragment : Fragment() {
     }
 
     private fun validate():Boolean{
+        name = nameEditText.text.toString()
         email = removeSpacing()
         password = passwordEditText.text.toString()
         cnfPassword = cnfPasswordEditText.text.toString()
+        if(name.isEmpty())
+            return false
         if(email.isNotEmpty() and password.isNotEmpty()){
             if(password == cnfPassword && password.length >= 6){
                 return true

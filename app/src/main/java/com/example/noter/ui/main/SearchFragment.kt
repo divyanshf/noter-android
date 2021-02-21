@@ -20,12 +20,14 @@ import com.example.noter.R
 import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.example.noter.ui.adapter.NotesAdapter
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
     private var toolbar: Toolbar? = null
+    private var appBar: AppBarLayout? = null
     private var toolbarHead: EditText? = null
     private var sharedPreferences:SharedPreferences? = null
     private var navigationView:NavigationView? = null
@@ -43,6 +45,7 @@ class SearchFragment : Fragment() {
         sharedPreferences?.edit()?.putBoolean("Search", true)?.apply()
 
         toolbar = activity?.findViewById(R.id.my_toolbar)
+        appBar = activity?.findViewById(R.id.my_app_bar)
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
         navigationView = activity?.findViewById(R.id.navigation_view)
 
@@ -68,7 +71,7 @@ class SearchFragment : Fragment() {
         toolbarHeadLayout?.width = ViewGroup.LayoutParams.MATCH_PARENT
         toolbarHead?.layoutParams = toolbarHeadLayout
 
-        val marginParamas = toolbar?.layoutParams as ViewGroup.MarginLayoutParams
+        val marginParamas = appBar?.layoutParams as ViewGroup.MarginLayoutParams
         marginParamas.setMargins(0,0,0,0)
         toolbar?.setBackgroundResource(R.drawable.background_toolbar)
 
@@ -133,7 +136,7 @@ class SearchFragment : Fragment() {
 
         val dp10 = getPixel(10F)
         val dp15 = getPixel(15F)
-        val marginParamas = toolbar?.layoutParams as ViewGroup.MarginLayoutParams
+        val marginParamas = appBar?.layoutParams as ViewGroup.MarginLayoutParams
         marginParamas.setMargins(dp15, dp10, dp15, dp10)
         toolbar?.setBackgroundResource(R.drawable.corner_background_toolbar)
 

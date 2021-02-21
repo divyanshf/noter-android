@@ -59,7 +59,7 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/edit_bottom_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="0dp"
             android:backgroundTint="?attr/colorPrimary"
             android:layout_gravity="bottom"/>
 

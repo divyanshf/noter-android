@@ -1,11 +1,13 @@
 package com.example.noter.ui.edit
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
@@ -13,6 +15,7 @@ import com.example.noter.R
 import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -113,8 +116,15 @@ class EditActivity : AppCompatActivity() {
                 true
             }
             R.id.trash_permanent_menu_item -> {
-                notesViewModel.deleteNote(note)
-                finish()
+                MaterialAlertDialogBuilder(this, R.style.DialogAppearance)
+                        .setTitle(R.string.delete_permanent)
+                        .setMessage("Are you sure ?")
+                        .setPositiveButton("YES") { _: DialogInterface, _: Int ->
+                            notesViewModel.deleteNote(note)
+                            finish()
+                        }
+                        .setNegativeButton("NO", null)
+                        .show()
                 true
             }
             else -> false
