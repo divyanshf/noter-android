@@ -14,16 +14,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            app:elevation="5dp"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="10dp"
-            android:background="@android:color/transparent"
-            app:liftOnScroll="true">
+            android:background="@android:color/transparent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:elevation="5dp"
                 app:titleTextAppearance="@style/TitleAppearance"
                 android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
                 android:background="@drawable/corner_background_toolbar"

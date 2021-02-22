@@ -11,27 +11,48 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat.START
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.noter.R
+import com.example.noter.ui.auth.AuthActivity
 import com.example.noter.ui.settings.SettingsActivity
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
     private lateinit var toolbar: Toolbar
     private lateinit var toolbarHead: EditText
     private lateinit var drawer: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var fragment:Fragment
     private lateinit var sharedPreferences:SharedPreferences
+    private var theme:String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //  Set theme as per preference
+        val sp = this.getSharedPreferences("com.example.noter_preferences", 0)
+        theme = sp.getString("theme_preference", "system")
+        setTheme(theme)
+
+        //  Check logged in user
+        val user = firebaseAuth.currentUser
+        if(user == null){
+            val authActivity = Intent(this, AuthActivity::class.java)
+            startActivity(authActivity)
+        }
+
+        //  Display content
         setContentView(R.layout.activity_main)
 
         sharedPreferences = getSharedPreferences("com.example.noter.ui", MODE_PRIVATE)
@@ -123,6 +144,23 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.content_fragment, fragment)
         transaction.commit()
+    }
+
+    private fun setTheme(theme:String?){
+        when(theme){
+            "system" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+            "dark" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            "light" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            else -> {
+                Log.i("Theme Empty", "Why god why?")
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
