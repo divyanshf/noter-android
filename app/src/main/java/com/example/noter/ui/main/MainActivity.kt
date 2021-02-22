@@ -1,5 +1,6 @@
 package com.example.noter.ui.main
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -19,8 +20,10 @@ import androidx.fragment.app.Fragment
 import com.example.noter.R
 import com.example.noter.ui.auth.AuthActivity
 import com.example.noter.ui.settings.SettingsActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fragment:Fragment
     private lateinit var sharedPreferences:SharedPreferences
     private var theme:String? = ""
+    private var user:FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(theme)
 
         //  Check logged in user
-        val user = firebaseAuth.currentUser
+        user = firebaseAuth.currentUser
         if(user == null){
             val authActivity = Intent(this, AuthActivity::class.java)
             startActivity(authActivity)
@@ -201,7 +205,16 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.account -> {
-                Toast.makeText(this, "ACCOUNT", Toast.LENGTH_SHORT).show()
+                MaterialAlertDialogBuilder(this, R.style.DialogAppearance)
+                        .setTitle(user?.displayName)
+                        .setMessage("Do you want to log out?")
+                        .setPositiveButton("YES") { _: DialogInterface, _: Int ->
+                            firebaseAuth.signOut()
+                            val intent = Intent(this, AuthActivity::class.java)
+                            startActivity(intent)
+                        }
+                        .setNegativeButton("NO", null)
+                        .show()
                 true
             }
             else -> false

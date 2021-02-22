@@ -16,10 +16,9 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/content_fragment"
-                android:paddingTop="?attr/actionBarSize"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                android:paddingTop="?attr/actionBarSize"/>
 
         </androidx.core.widget.NestedScrollView>
 
@@ -28,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:elevation="0dp"
-            android:background="@android:color/transparent">
+            android:background="@android:color/transparent"
+            app:liftOnScroll="true">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/my_toolbar"
