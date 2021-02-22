@@ -146,6 +146,22 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    private fun transactFragmentSearch(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.content_fragment, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    override fun onBackPressed() {
+        if(supportFragmentManager.backStackEntryCount == 0){
+            super.onBackPressed()
+        }
+        else{
+            supportFragmentManager.popBackStack()
+        }
+    }
+
     private fun setTheme(theme:String?){
         when(theme){
             "system" -> {
@@ -172,18 +188,16 @@ class MainActivity : AppCompatActivity() {
         return when(item.itemId){
             android.R.id.home -> {
                 if(sharedPreferences.getBoolean("Search", false)){
-                    Log.i("HOME", "false")
                     false
                 }
                 else{
-                    Log.i("HOME", "true")
                     drawer.openDrawer(START)
                     true
                 }
             }
             R.id.menu_search -> {
                 fragment = SearchFragment()
-                transactFragment()
+                transactFragmentSearch()
                 true
             }
             R.id.account -> {

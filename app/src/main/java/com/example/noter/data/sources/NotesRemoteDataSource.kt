@@ -92,7 +92,6 @@ constructor(
                 }
 
         val searchResult = createArrayFromMap(snapDocuments as MutableList<DocumentSnapshot>)
-        Log.i("Search", "$searchResult")
         emit(searchResult)
     }
 

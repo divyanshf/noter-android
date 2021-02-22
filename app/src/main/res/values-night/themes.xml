@@ -18,6 +18,6 @@
         <item name="surfaceColor">@color/grey</item>
         <item name="alertDialogTheme">@style/DialogAppearance</item>
 
-        <item name="actionBarSize">50dp</item>
+        <item name="actionBarSize">70dp</item>
     </style>
 </resources>

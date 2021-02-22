@@ -1,5 +1,6 @@
 package com.example.noter.ui.main
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
@@ -36,6 +37,7 @@ class SearchFragment : Fragment() {
     private val notesViewModel: NotesViewModel by viewModels()
     private var notes:List<Note> = ArrayList()
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -123,8 +125,8 @@ class SearchFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         sharedPreferences?.edit()?.putBoolean("Search", false)?.apply()
+        Log.i("Search", "destroy view")
 
         toolbar?.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
 
@@ -139,7 +141,7 @@ class SearchFragment : Fragment() {
         val marginParamas = toolbar?.layoutParams as ViewGroup.MarginLayoutParams
         marginParamas.setMargins(dp15, dp10, dp15, dp10)
         toolbar?.setBackgroundResource(R.drawable.corner_background_toolbar)
-
+        super.onDestroyView()
     }
 
     private fun getPixel(dp:Float):Int{
@@ -154,9 +156,8 @@ class SearchFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             android.R.id.home -> {
-                Log.i("BACK", "true")
+                Log.i("Search", "true")
                 hideKeyboard()
-                toolbar?.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
                 navigationView?.setCheckedItem(R.id.all_notes)
                 val transaction = activity?.supportFragmentManager?.beginTransaction()
                 val fragment = NotesFragment()
