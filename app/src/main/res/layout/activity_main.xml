@@ -9,20 +9,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/content_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </androidx.core.widget.NestedScrollView>
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/my_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            app:elevation="5dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="10dp"
+            app:elevation="0dp"
             android:background="@android:color/transparent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="10dp"
+                android:elevation="4dp"
                 app:titleTextAppearance="@style/TitleAppearance"
                 android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
                 android:background="@drawable/corner_background_toolbar"
@@ -42,13 +55,6 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/content_fragment"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginVertical="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_note"

@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
         toolbarHeadLayout?.width = ViewGroup.LayoutParams.MATCH_PARENT
         toolbarHead?.layoutParams = toolbarHeadLayout
 
-        val marginParamas = appBar?.layoutParams as ViewGroup.MarginLayoutParams
+        val marginParamas = toolbar?.layoutParams as ViewGroup.MarginLayoutParams
         marginParamas.setMargins(0,0,0,0)
         toolbar?.setBackgroundResource(R.drawable.background_toolbar)
 
@@ -136,7 +136,7 @@ class SearchFragment : Fragment() {
 
         val dp10 = getPixel(10F)
         val dp15 = getPixel(15F)
-        val marginParamas = appBar?.layoutParams as ViewGroup.MarginLayoutParams
+        val marginParamas = toolbar?.layoutParams as ViewGroup.MarginLayoutParams
         marginParamas.setMargins(dp15, dp10, dp15, dp10)
         toolbar?.setBackgroundResource(R.drawable.corner_background_toolbar)
 
