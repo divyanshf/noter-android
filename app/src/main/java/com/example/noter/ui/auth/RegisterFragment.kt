@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +25,7 @@ class RegisterFragment : Fragment() {
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
     private lateinit var warningTextView: TextView
+    private lateinit var loadingBar: ProgressBar
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
@@ -45,8 +47,11 @@ class RegisterFragment : Fragment() {
         passwordEditText = view.findViewById(R.id.password_edit_text)
         cnfPasswordEditText = view.findViewById(R.id.cnf_password_edit_text)
         warningTextView = view.findViewById(R.id.register_warning)
+        loadingBar = view.findViewById(R.id.progress_bar)
 
         view.findViewById<Button>(R.id.register_button).setOnClickListener {
+            warningTextView.visibility = View.INVISIBLE
+            loadingBar.visibility = View.VISIBLE
             if(validate()){
                 try {
                     userViewModel.register(name, email, password)
@@ -58,6 +63,7 @@ class RegisterFragment : Fragment() {
             }
             else{
                 warningTextView.visibility = View.VISIBLE
+                loadingBar.visibility = View.INVISIBLE
             }
         }
 
@@ -75,6 +81,7 @@ class RegisterFragment : Fragment() {
             }
             else{
                 warningTextView.visibility = View.VISIBLE
+                loadingBar.visibility = View.INVISIBLE
             }
         }
     }

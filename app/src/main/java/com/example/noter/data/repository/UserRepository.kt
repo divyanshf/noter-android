@@ -1,6 +1,5 @@
 package com.example.noter.data.repository
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.flow.flow
@@ -18,19 +17,24 @@ constructor(
 
     suspend fun loginUser(email:String, password:String) : Boolean{
         var result = false
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+        try {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if(it.isSuccessful){
                         result = true
                     }
                 }
                 .await()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         return result
     }
 
     suspend fun registerUser(name:String, email:String, password:String): Boolean {
         var result = false
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
+        try {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if(it.isSuccessful){
                         result = true
@@ -38,13 +42,17 @@ constructor(
                 }
                 .await()
 
-        val profileUpdate = UserProfileChangeRequest.Builder()
+            val profileUpdate = UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
                 .build()
 
-        firebaseAuth.currentUser!!
+            firebaseAuth.currentUser!!
                 .updateProfile(profileUpdate)
                 .await()
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
         return result
     }

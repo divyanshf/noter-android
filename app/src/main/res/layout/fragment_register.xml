@@ -50,11 +50,18 @@
             android:inputType="textPassword"
             android:hint="@string/cnf_password"/>
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+
         <Button
             android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="?attr/colorSurface"
             android:text="@string/register"/>
 
@@ -63,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/auth_warning"
+            android:layout_marginTop="20dp"
             android:textColor="@color/design_default_color_error"
             android:visibility="invisible"/>
 
