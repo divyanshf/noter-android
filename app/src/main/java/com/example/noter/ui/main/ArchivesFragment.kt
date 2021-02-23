@@ -35,12 +35,16 @@ class ArchivesFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_notes, container, false)
 
+        val sp = activity?.getSharedPreferences("com.example.noter_preferences", 0)
+        val listStyle = sp?.getString("recycler_view_preference", "2")
+
         toolbar = activity?.findViewById(R.id.my_toolbar)
         toolbar?.setTitle(R.string.archives)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
 
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+
+        recyclerView.layoutManager = StaggeredGridLayoutManager(listStyle!!.toInt(), LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter
 
         refresh()

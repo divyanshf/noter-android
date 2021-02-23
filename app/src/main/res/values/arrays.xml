@@ -13,4 +13,14 @@
         <item>@string/system_default</item>
     </string-array>
 
+    <string-array name="recycler_view_entries">
+        <item>@string/count_1</item>
+        <item>@string/count_2</item>
+    </string-array>
+
+    <string-array name="recycler_view_values">
+        <item>@string/count_1</item>
+        <item>@string/count_2</item>
+    </string-array>
+
 </resources>

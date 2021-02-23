@@ -9,7 +9,7 @@ import com.example.noter.R
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    var themePreference:ListPreference? = null
+    private var themePreference:ListPreference? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.main_preferences, rootKey)

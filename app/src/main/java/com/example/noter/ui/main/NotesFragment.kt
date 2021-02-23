@@ -42,6 +42,9 @@ class NotesFragment : Fragment(){
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_notes, container, false)
 
+        val sp = activity?.getSharedPreferences("com.example.noter_preferences", 0)
+        val listStyle = sp?.getString("recycler_view_preference", "2")
+
         toolbar = activity?.findViewById(R.id.my_toolbar)
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
         fabAdd = activity?.findViewById(R.id.fab_add_note)
@@ -57,7 +60,7 @@ class NotesFragment : Fragment(){
         toolbarHead?.layoutParams = toolbarHeadLayout
         Log.i("Back", toolbar?.background.toString())
 
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(listStyle!!.toInt(), LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter
 
         //  Open the Search Fragment

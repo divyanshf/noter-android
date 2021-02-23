@@ -7,6 +7,16 @@
         app:title="@string/general">
 
         <ListPreference
+            app:key="recycler_view_preference"
+            app:iconSpaceReserved="false"
+            app:title="List Columns"
+            app:dialogTitle="Choose the list columns"
+            app:summary="%s"
+            app:entries="@array/recycler_view_entries"
+            app:entryValues="@array/recycler_view_values"
+            app:defaultValue="@string/count_2"/>
+
+        <ListPreference
             app:key="theme_preference"
             app:iconSpaceReserved="false"
             app:title="@string/theme"

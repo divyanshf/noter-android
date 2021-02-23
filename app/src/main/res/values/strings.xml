@@ -35,6 +35,7 @@
 
     <string name="general">General</string>
     <string name="about">About</string>
+
     <string name="theme">Theme</string>
     <string name="select_theme">Choose a theme</string>
     <string name="system_theme">System Default</string>
@@ -43,4 +44,7 @@
     <string name="system_default">system</string>
     <string name="light">light</string>
     <string name="dark">dark</string>
+
+    <string name="count_1">1</string>
+    <string name="count_2">2</string>
 </resources>

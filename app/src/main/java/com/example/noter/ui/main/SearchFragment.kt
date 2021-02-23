@@ -45,6 +45,9 @@ class SearchFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_notes, container, false)
 
+        val sp = activity?.getSharedPreferences("com.example.noter_preferences", 0)
+        val listStyle = sp?.getString("recycler_view_preference", "2")
+
         sharedPreferences = activity?.getSharedPreferences("com.example.noter.ui", AppCompatActivity.MODE_PRIVATE)
         sharedPreferences?.edit()?.putBoolean("Search", true)?.apply()
 
@@ -59,7 +62,8 @@ class SearchFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
 
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+
+        recyclerView.layoutManager = StaggeredGridLayoutManager(listStyle!!.toInt(), LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter
 
         toolbar?.title = null
@@ -127,6 +131,7 @@ class SearchFragment : Fragment() {
 
     override fun onDestroyView() {
         sharedPreferences?.edit()?.putBoolean("Search", false)?.apply()
+
 
         toolbar?.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
 
