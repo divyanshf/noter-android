@@ -1,18 +1,15 @@
 package com.example.noter.ui.auth
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.activity.addCallback
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.noter.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class AuthFragment : Fragment(), View.OnClickListener {
@@ -23,10 +20,6 @@ class AuthFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        activity?.onBackPressedDispatcher?.addCallback {
-            activity?.finishAffinity()
-            exitProcess(0)
-        }
         return inflater.inflate(R.layout.fragment_auth, container, false)
     }
 

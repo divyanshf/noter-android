@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
         user = firebaseAuth.currentUser
         if(user == null){
             val authActivity = Intent(this, AuthActivity::class.java)
+            authActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            authActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            authActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(authActivity)
         }
         else{
@@ -221,6 +224,9 @@ class MainActivity : AppCompatActivity() {
                         .setPositiveButton("YES") { _: DialogInterface, _: Int ->
                             firebaseAuth.signOut()
                             val intent = Intent(this, AuthActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                             startActivity(intent)
                         }
                         .setNegativeButton("NO", null)
