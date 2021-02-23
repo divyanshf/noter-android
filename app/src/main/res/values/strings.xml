@@ -18,6 +18,7 @@
     <string name="cnf_password">Confirm Password</string>
     <string name="already_a_user">Already a user?</string>
     <string name="not_yet_registered">Not yet registered?</string>
+    <string name="auth_warning">Please input valid details</string>
 
     <string name="all_notes">Notes</string>
     <string name="starred">Starred</string>

@@ -12,86 +12,157 @@ import javax.inject.Inject
 class NotesRemoteDataSource
 @Inject
 constructor(
-        firebaseFirestore: FirebaseFirestore,
-        firebaseAuth: FirebaseAuth
+        private val firebaseFirestore: FirebaseFirestore,
+        private val firebaseAuth: FirebaseAuth
 )
 {
-    private var user = firebaseAuth.currentUser
-    private var notesCollection = firebaseFirestore.collection("users").document(user?.email!!).collection("notes")
-
+    private var usersCollection = firebaseFirestore.collection("users")
 
     suspend fun insertNote(note:Note) {
-        notesCollection
-                .add(createMapFromNote(note))
-                .await()
+        val user = firebaseAuth.currentUser
+        try {
+            usersCollection
+                    .document(user?.email!!)
+                    .collection("notes")
+                    .add(createMapFromNote(note))
+                    .await()
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     suspend fun updateNote(note:Note){
-        notesCollection.document(note.id.toString())
-                .update(createMapFromNote(note))
-                .await()
+        try {
+            val user = firebaseAuth.currentUser
+            usersCollection
+                    .document(user?.email!!)
+                    .collection("notes")
+                    .document(note.id.toString())
+                    .update(createMapFromNote(note))
+                    .await()
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     suspend fun deleteNote(note:Note){
-        notesCollection.document(note.id.toString())
-                .delete()
-                .await()
+        try {
+            val user = firebaseAuth.currentUser
+            usersCollection
+                    .document(user?.email!!)
+                    .collection("notes")
+                    .document(note.id.toString())
+                    .delete()
+                    .await()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     suspend fun getAllNotes() = flow {
-        val snap = notesCollection
-                .whereEqualTo("trash", false)
-                .whereEqualTo("archive", false)
-                .get()
-                .await()
+        var result:List<Note> = ArrayList()
+        try {
+            val user = firebaseAuth.currentUser
+            val snap = usersCollection
+                    .document(user?.email!!)
+                    .collection("notes")
+                    .whereEqualTo("trash", false)
+                    .whereEqualTo("archive", false)
+                    .get()
+                    .await()
 
-        emit(createArrayFromMap(snap.documents))
+            result = createArrayFromMap(snap.documents)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        emit(result)
     }
 
     suspend fun getArchivedNotes() = flow {
-        val snap = notesCollection
-                .whereEqualTo("trash", false)
-                .whereEqualTo("archive", true)
-                .get()
-                .await()
+        var result:List<Note> = ArrayList()
+        try {
+            val user = firebaseAuth.currentUser
+            val snap = usersCollection
+                    .document(user?.email!!)
+                    .collection("notes")
+                    .whereEqualTo("trash", false)
+                    .whereEqualTo("archive", true)
+                    .get()
+                    .await()
 
-        emit(createArrayFromMap(snap.documents))
+            result = createArrayFromMap(snap.documents)
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        emit(result)
     }
 
     suspend fun getStarredNotes() = flow {
-        val snap = notesCollection
-                .whereEqualTo("star", true)
-                .whereEqualTo("trash", false)
-                .whereEqualTo("archive", false)
-                .get()
-                .await()
+        var result:List<Note> = ArrayList()
+        try {
+            val user = firebaseAuth.currentUser
+            val snap = usersCollection
+                    .document(user?.email!!)
+                    .collection("notes")
+                    .whereEqualTo("star", true)
+                    .whereEqualTo("trash", false)
+                    .whereEqualTo("archive", false)
+                    .get()
+                    .await()
 
-        emit(createArrayFromMap(snap.documents))
+            result = createArrayFromMap(snap.documents)
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        emit(result)
     }
 
     suspend fun getTrashNotes() = flow {
-        val snap = notesCollection
-                .whereEqualTo("trash", true)
-                .get()
-                .await()
+        var result:List<Note> = ArrayList()
+        try {
+            val user = firebaseAuth.currentUser
+            val snap = usersCollection
+                    .document(user?.email!!)
+                    .collection("notes")
+                    .whereEqualTo("trash", true)
+                    .get()
+                    .await()
 
-        emit(createArrayFromMap(snap.documents))
+            result = createArrayFromMap(snap.documents)
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        emit(result)
     }
 
     suspend fun searchNotes(query:String) = flow {
-        val snap = notesCollection
-                .whereEqualTo("trash", false)
-                .whereEqualTo("archive", false)
-                .get()
-                .await()
+        var searchResult:List<Note> = ArrayList()
+        try {
+            val user = firebaseAuth.currentUser
+            val snap = usersCollection
+                    .document(user?.email!!)
+                    .collection("notes")
+                    .whereEqualTo("trash", false)
+                    .whereEqualTo("archive", false)
+                    .get()
+                    .await()
 
-        val snapDocuments = snap
-                .documents
-                .filter {
-                    it["title"].toString().contains(query, true) || it["content"].toString().contains(query, true)
-                }
+            val snapDocuments = snap
+                    .documents
+                    .filter {
+                        it["title"].toString().contains(query, true) || it["content"].toString().contains(query, true)
+                    }
 
-        val searchResult = createArrayFromMap(snapDocuments as MutableList<DocumentSnapshot>)
+            searchResult = createArrayFromMap(snapDocuments as MutableList<DocumentSnapshot>)
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         emit(searchResult)
     }
 

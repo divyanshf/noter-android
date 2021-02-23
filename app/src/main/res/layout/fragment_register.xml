@@ -58,6 +58,14 @@
             android:backgroundTint="?attr/colorSurface"
             android:text="@string/register"/>
 
+        <TextView
+            android:id="@+id/register_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auth_warning"
+            android:textColor="@color/design_default_color_error"
+            android:visibility="invisible"/>
+
     </LinearLayout>
 
 </ScrollView>

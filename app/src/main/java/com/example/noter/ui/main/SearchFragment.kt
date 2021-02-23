@@ -34,7 +34,7 @@ class SearchFragment : Fragment() {
     private var navigationView:NavigationView? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
-    private val notesViewModel: NotesViewModel by viewModels()
+    private lateinit var notesViewModel: NotesViewModel
     private var notes:List<Note> = ArrayList()
 
     @SuppressLint("ResourceType")
@@ -50,6 +50,7 @@ class SearchFragment : Fragment() {
         appBar = activity?.findViewById(R.id.my_app_bar)
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
         navigationView = activity?.findViewById(R.id.navigation_view)
+        notesViewModel = (activity as MainActivity).notesViewModel
 
         toolbarHead?.isFocusable = true
         toolbarHead?.isFocusableInTouchMode = true

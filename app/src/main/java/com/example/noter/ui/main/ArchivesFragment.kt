@@ -21,7 +21,7 @@ class ArchivesFragment : Fragment() {
     private var toolbar:Toolbar? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
-    private val notesViewModel: NotesViewModel by viewModels()
+    private lateinit var notesViewModel: NotesViewModel
     private var notes:List<Note> = ArrayList()
 
     override fun onCreateView(
@@ -35,6 +35,7 @@ class ArchivesFragment : Fragment() {
         toolbar?.setTitle(R.string.archives)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
+        notesViewModel = (activity as MainActivity).notesViewModel
 
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter

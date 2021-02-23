@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -21,7 +20,7 @@ class TrashFragment : Fragment() {
     private var toolbar: Toolbar? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
-    private val notesViewModel: NotesViewModel by viewModels()
+    private lateinit var notesViewModel: NotesViewModel
     private var notes:List<Note> = ArrayList()
 
     override fun onCreateView(
@@ -35,6 +34,7 @@ class TrashFragment : Fragment() {
         toolbar?.setTitle(R.string.trash)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
+        notesViewModel = (activity as MainActivity).notesViewModel
 
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter

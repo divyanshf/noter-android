@@ -28,7 +28,7 @@ class NotesFragment : Fragment(){
     private lateinit var recyclerView:RecyclerView
     private lateinit var recyclerViewAdapter:NotesAdapter
     private var notes:List<Note> = ArrayList()
-    private val notesViewModel:NotesViewModel by viewModels()
+    private lateinit var notesViewModel:NotesViewModel
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
@@ -43,6 +43,7 @@ class NotesFragment : Fragment(){
         fabAdd = activity?.findViewById(R.id.fab_add_note)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
+        notesViewModel = (activity as MainActivity).notesViewModel
 
         toolbar?.title = null
         toolbarHead?.isFocusable = false

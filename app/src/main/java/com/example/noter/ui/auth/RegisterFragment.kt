@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.noter.R
@@ -22,6 +23,7 @@ class RegisterFragment : Fragment() {
     private val userViewModel:UserViewModel by viewModels()
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var warningTextView: TextView
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
@@ -42,11 +44,20 @@ class RegisterFragment : Fragment() {
         emailEditText = view.findViewById(R.id.email_edit_text)
         passwordEditText = view.findViewById(R.id.password_edit_text)
         cnfPasswordEditText = view.findViewById(R.id.cnf_password_edit_text)
+        warningTextView = view.findViewById(R.id.register_warning)
 
         view.findViewById<Button>(R.id.register_button).setOnClickListener {
             if(validate()){
-                userViewModel.register(name, email, password)
+                try {
+                    userViewModel.register(name, email, password)
+                }
+                catch (e:Exception){
+                    e.printStackTrace()
+                }
                 checkUser()
+            }
+            else{
+                warningTextView.visibility = View.VISIBLE
             }
         }
 
@@ -58,6 +69,9 @@ class RegisterFragment : Fragment() {
             if(it.currentUser != null){
                 val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
+            }
+            else{
+                warningTextView.visibility = View.VISIBLE
             }
         }
     }
@@ -78,7 +92,7 @@ class RegisterFragment : Fragment() {
             return false
         if(email.isNotEmpty() and password.isNotEmpty()){
             if(password == cnfPassword && password.length >= 6){
-                return true
+                return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
             }
         }
         return false
