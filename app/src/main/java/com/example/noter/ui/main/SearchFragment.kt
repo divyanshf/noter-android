@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.noter.R
 import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
@@ -32,9 +33,10 @@ class SearchFragment : Fragment() {
     private var toolbarHead: EditText? = null
     private var sharedPreferences:SharedPreferences? = null
     private var navigationView:NavigationView? = null
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
-    private lateinit var notesViewModel: NotesViewModel
+    private val notesViewModel: NotesViewModel by viewModels()
     private var notes:List<Note> = ArrayList()
 
     @SuppressLint("ResourceType")
@@ -50,7 +52,6 @@ class SearchFragment : Fragment() {
         appBar = activity?.findViewById(R.id.my_app_bar)
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
         navigationView = activity?.findViewById(R.id.navigation_view)
-        notesViewModel = (activity as MainActivity).notesViewModel
 
         toolbarHead?.isFocusable = true
         toolbarHead?.isFocusableInTouchMode = true
@@ -90,6 +91,10 @@ class SearchFragment : Fragment() {
 
         toolbar?.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh)
+        swipeRefreshLayout.isEnabled = false
+        swipeRefreshLayout.isRefreshing = false
+
         setHasOptionsMenu(true)
 
         return view
@@ -114,11 +119,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        search(toolbarHead?.text.toString())
-        super.onResume()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.findItem(R.id.menu_search).isVisible = false
         menu.findItem(R.id.account).isVisible = false
@@ -127,7 +127,6 @@ class SearchFragment : Fragment() {
 
     override fun onDestroyView() {
         sharedPreferences?.edit()?.putBoolean("Search", false)?.apply()
-        Log.i("Search", "destroy view")
 
         toolbar?.setNavigationIcon(R.drawable.ic_baseline_dehaze_24)
 
@@ -136,6 +135,9 @@ class SearchFragment : Fragment() {
         toolbarHead?.layoutParams = toolbarHeadLayout
 
         notesViewModel.mSearchNotes.removeObservers(viewLifecycleOwner)
+
+        swipeRefreshLayout.isEnabled = true
+        swipeRefreshLayout.isRefreshing = true
 
         val dp10 = getPixel(10F)
         val dp15 = getPixel(15F)

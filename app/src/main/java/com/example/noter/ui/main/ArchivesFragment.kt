@@ -10,18 +10,22 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.noter.R
 import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.example.noter.ui.adapter.NotesAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
 @AndroidEntryPoint
 class ArchivesFragment : Fragment() {
     private var toolbar:Toolbar? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
-    private lateinit var notesViewModel: NotesViewModel
+    private val notesViewModel: NotesViewModel by viewModels()
     private var notes:List<Note> = ArrayList()
 
     override fun onCreateView(
@@ -35,25 +39,28 @@ class ArchivesFragment : Fragment() {
         toolbar?.setTitle(R.string.archives)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
-        notesViewModel = (activity as MainActivity).notesViewModel
 
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.adapter = recyclerViewAdapter
 
-        notesViewModel.getArchivedNotes()
-        notesViewModel.mArchivedNotes.observe(viewLifecycleOwner, {
-            notes = it
-            recyclerViewAdapter.setNotes(it)
-        })
+        refresh()
+
+        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
+        swipeRefreshLayout.setOnRefreshListener {
+            refresh()
+            Timer("Refresh", false).schedule(500){
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
+
         return view
     }
 
-    override fun onResume() {
+    private fun refresh(){
         notesViewModel.getArchivedNotes()
         notesViewModel.mArchivedNotes.observe(viewLifecycleOwner, {
             notes = it
             recyclerViewAdapter.setNotes(it)
         })
-        super.onResume()
     }
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.noter.R
 import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
@@ -19,6 +20,9 @@ import com.example.noter.ui.adapter.NotesAdapter
 import com.example.noter.ui.edit.EditActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
 @AndroidEntryPoint
 class NotesFragment : Fragment(){
@@ -28,7 +32,7 @@ class NotesFragment : Fragment(){
     private lateinit var recyclerView:RecyclerView
     private lateinit var recyclerViewAdapter:NotesAdapter
     private var notes:List<Note> = ArrayList()
-    private lateinit var notesViewModel:NotesViewModel
+    private val notesViewModel:NotesViewModel by viewModels()
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
@@ -43,7 +47,6 @@ class NotesFragment : Fragment(){
         fabAdd = activity?.findViewById(R.id.fab_add_note)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
-        notesViewModel = (activity as MainActivity).notesViewModel
 
         toolbar?.title = null
         toolbarHead?.isFocusable = false
@@ -72,24 +75,27 @@ class NotesFragment : Fragment(){
             startActivity(intent)
         }
 
-        notesViewModel.getAllNotes()
-        notesViewModel.mAllNotes.observe(viewLifecycleOwner, {
-            notes = it
-            recyclerViewAdapter.setNotes(it)
-        })
+        refresh()
+
+        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
+        swipeRefreshLayout.setOnRefreshListener {
+            refresh()
+            Timer("Refresh", false).schedule(500){
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
 
         setHasOptionsMenu(true)
 
         return view
     }
 
-    override fun onResume() {
+    private fun refresh(){
         notesViewModel.getAllNotes()
         notesViewModel.mAllNotes.observe(viewLifecycleOwner, {
             notes = it
             recyclerViewAdapter.setNotes(it)
         })
-        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
