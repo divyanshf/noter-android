@@ -1,10 +1,12 @@
 package com.example.noter.data.sources
 
-import android.util.Log
 import com.example.noter.data.model.Note
+import com.example.noter.data.model.Result
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -12,7 +14,7 @@ import javax.inject.Inject
 class NotesRemoteDataSource
 @Inject
 constructor(
-        private val firebaseFirestore: FirebaseFirestore,
+        firebaseFirestore: FirebaseFirestore,
         private val firebaseAuth: FirebaseAuth
 )
 {
@@ -62,7 +64,8 @@ constructor(
     }
 
     suspend fun getAllNotes() = flow {
-        var result:List<Note> = ArrayList()
+        emit(Result.Progress)
+        val result: List<Note>
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
@@ -70,18 +73,21 @@ constructor(
                     .collection("notes")
                     .whereEqualTo("trash", false)
                     .whereEqualTo("archive", false)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .await()
 
             result = createArrayFromMap(snap.documents)
+            emit(Result.Success(result))
         }catch (e:Exception){
             e.printStackTrace()
+            emit(Result.Error("Something went wrong!"))
         }
-        emit(result)
     }
 
     suspend fun getArchivedNotes() = flow {
-        var result:List<Note> = ArrayList()
+        emit(Result.Progress)
+        val result: List<Note>
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
@@ -89,19 +95,21 @@ constructor(
                     .collection("notes")
                     .whereEqualTo("trash", false)
                     .whereEqualTo("archive", true)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .await()
 
             result = createArrayFromMap(snap.documents)
-
+            emit(Result.Success(result))
         }catch (e:Exception){
             e.printStackTrace()
+            emit(Result.Error("Something went wrong!"))
         }
-        emit(result)
     }
 
     suspend fun getStarredNotes() = flow {
-        var result:List<Note> = ArrayList()
+        emit(Result.Progress)
+        val result: List<Note>
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
@@ -110,38 +118,42 @@ constructor(
                     .whereEqualTo("star", true)
                     .whereEqualTo("trash", false)
                     .whereEqualTo("archive", false)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .await()
 
             result = createArrayFromMap(snap.documents)
-
+            emit(Result.Success(result))
         }catch (e:Exception){
             e.printStackTrace()
+            emit(Result.Error("Something went wrong!"))
         }
-        emit(result)
     }
 
     suspend fun getTrashNotes() = flow {
-        var result:List<Note> = ArrayList()
+        emit(Result.Progress)
+        val result: List<Note>
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
                     .document(user?.email!!)
                     .collection("notes")
                     .whereEqualTo("trash", true)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .await()
 
             result = createArrayFromMap(snap.documents)
-
+            emit(Result.Success(result))
         }catch (e:Exception){
             e.printStackTrace()
+            emit(Result.Error("Something went wrong!"))
         }
-        emit(result)
     }
 
     suspend fun searchNotes(query:String) = flow {
-        var searchResult:List<Note> = ArrayList()
+        emit(Result.Progress)
+        val searchResult: List<Note>
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
@@ -149,6 +161,7 @@ constructor(
                     .collection("notes")
                     .whereEqualTo("trash", false)
                     .whereEqualTo("archive", false)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .await()
 
@@ -159,26 +172,43 @@ constructor(
                     }
 
             searchResult = createArrayFromMap(snapDocuments as MutableList<DocumentSnapshot>)
-
+            emit(Result.Success(searchResult))
         }catch (e:Exception){
             e.printStackTrace()
+            emit(Result.Error("Something went wrong!"))
         }
-        emit(searchResult)
     }
 
     private fun createArrayFromMap(documents: MutableList<DocumentSnapshot>): List<Note>{
         val allNotes = ArrayList<Note>()
 
         for(i in documents){
-            val note = Note(
-                    i.id,
-                    i["title"] as String,
-                    i["content"] as String,
-                    i["star"] as Boolean,
-                    i["archive"] as Boolean,
-                    i["trash"] as Boolean
-            )
-            allNotes.add(note)
+            var note:Note
+            try {
+                note = Note(
+                        i.id,
+                        i["title"] as String,
+                        i["content"] as String,
+                        i["star"] as Boolean,
+                        i["archive"] as Boolean,
+                        i["trash"] as Boolean,
+                        i["edited"] as Boolean,
+                        i["timestamp"] as Timestamp
+                )
+                allNotes.add(note)
+            }catch (e:Exception){
+                note = Note(
+                        i.id,
+                        i["title"] as String,
+                        i["content"] as String,
+                        i["star"] as Boolean,
+                        i["archive"] as Boolean,
+                        i["trash"] as Boolean,
+                        false,
+                        i["timestamp"] as Timestamp
+                )
+                allNotes.add(note)
+            }
         }
 
         return allNotes
@@ -191,6 +221,8 @@ constructor(
         hashMap["archive"] = note.archived
         hashMap["star"] = note.starred
         hashMap["trash"] = note.trash
+        hashMap["edited"] = note.edited
+        hashMap["timestamp"] = note.timestamp as Timestamp
 
         return hashMap
     }

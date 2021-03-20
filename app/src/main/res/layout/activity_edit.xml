@@ -59,9 +59,17 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/edit_bottom_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="?attr/actionBarSize"
             android:backgroundTint="?attr/colorPrimary"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/edit_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"/>
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

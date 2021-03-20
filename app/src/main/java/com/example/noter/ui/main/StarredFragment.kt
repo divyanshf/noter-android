@@ -1,9 +1,11 @@
 package com.example.noter.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.noter.R
 import com.example.noter.data.model.Note
+import com.example.noter.data.model.Result
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.example.noter.ui.adapter.NotesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +26,7 @@ import kotlin.concurrent.schedule
 @AndroidEntryPoint
 class StarredFragment : Fragment() {
     private var toolbar: Toolbar? = null
+    private var progressBar:ProgressBar? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: NotesAdapter
     private val notesViewModel: NotesViewModel by viewModels()
@@ -42,6 +46,7 @@ class StarredFragment : Fragment() {
         toolbar?.setTitle(R.string.starred)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
+        progressBar = activity?.findViewById(R.id.progress_bar)
 
 
         recyclerView.layoutManager = StaggeredGridLayoutManager(listStyle!!.toInt(), LinearLayoutManager.VERTICAL)
@@ -63,8 +68,21 @@ class StarredFragment : Fragment() {
     private fun refresh(){
         notesViewModel.getStarredNotes()
         notesViewModel.mStarredNotes.observe(viewLifecycleOwner, {
-            notes = it
-            recyclerViewAdapter.setNotes(it)
+            when(it){
+                Result.Progress -> {
+                    progressBar?.visibility = View.VISIBLE
+                    Log.i("Notes", "progress")
+                }
+                is Result.Success -> {
+                    progressBar?.visibility = View.GONE
+                    notes = it.result
+                    recyclerViewAdapter.setNotes(it.result)
+                }
+                is Result.Error -> {
+                    progressBar?.visibility = View.GONE
+                    Log.i("Notes", it.message)
+                }
+            }
         })
     }
 }

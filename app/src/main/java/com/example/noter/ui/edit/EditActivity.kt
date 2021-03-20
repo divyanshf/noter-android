@@ -2,9 +2,11 @@ package com.example.noter.ui.edit
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -16,24 +18,31 @@ import com.example.noter.data.model.Note
 import com.example.noter.data.viewmodel.NotesViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.Timestamp
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
 
 @AndroidEntryPoint
 class EditActivity : AppCompatActivity() {
     private lateinit var titleEditText: EditText
+    private lateinit var editTime: TextView
     private lateinit var contentEditText: EditText
     private lateinit var toolbar:Toolbar
     private lateinit var bottomAppBar: BottomAppBar
     private var intentNote:Note? = null
     private var prepopulate = false
-    private var note:Note = Note("", "", "", starred = false, archived = false, trash = false)
+    private var note:Note = Note("", "", "", starred = false, archived = false, trash = false, edited = false, timestamp = null)
     private val notesViewModel:NotesViewModel by viewModels()
 
+    @ExperimentalTime
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
         titleEditText = findViewById(R.id.title_edit_text)
+        editTime = findViewById(R.id.edit_time)
         contentEditText = findViewById(R.id.content_edit_text)
         toolbar = findViewById(R.id.edit_toolbar)
         bottomAppBar = findViewById(R.id.edit_bottom_app_bar)
@@ -41,7 +50,15 @@ class EditActivity : AppCompatActivity() {
         try {
             intentNote = intent.getParcelableExtra("note")!!
             prepopulate = true
-            note = intentNote!!
+            note = Note(intentNote?.id, intentNote?.title, intentNote?.content, intentNote?.starred!!, intentNote?.archived!!, intentNote?.trash!!, intentNote?.edited!!, intentNote?.timestamp)
+            val date = note.timestamp?.toDate()
+            val day = getDay(date!!)
+            if(note.edited){
+                editTime.text = "Edited $day"
+            }
+            else{
+                editTime.text = "Created $day"
+            }
         }catch (e:Exception){
             e.printStackTrace()
         }
@@ -59,6 +76,26 @@ class EditActivity : AppCompatActivity() {
 
         contentEditText.doOnTextChanged { text, _, _, _ ->
             note.content = text.toString()
+        }
+    }
+
+    @ExperimentalTime
+    private fun getDay(date:Date):String{
+        val timeMS = date.time.milliseconds.toLongMilliseconds()
+        val timeCalendar = Calendar.getInstance()
+        timeCalendar.timeInMillis = timeMS
+
+        val now = Calendar.getInstance().get(Calendar.DATE)
+        return when(timeCalendar.get(Calendar.DATE)){
+            now -> {
+                date.toString().substring(11, 16)
+            }
+            else -> {
+                val timestampString = date.toString()
+                val date = timestampString.substring(4, 10)
+                val year = timestampString.substring(timestampString.length - 4, timestampString.length)
+                return "$date, $year"
+            }
         }
     }
 
@@ -135,10 +172,15 @@ class EditActivity : AppCompatActivity() {
     private fun saveNote(){
         when(prepopulate){
             true -> {
-                notesViewModel.updateNote(note)
+                if(note != intentNote){
+                    note.edited = true
+                    note.timestamp = Timestamp.now()
+                    notesViewModel.updateNote(note)
+                }
             }
             false -> {
                 if(note.title?.isNotBlank()!! || note.content?.isNotBlank()!!){
+                    note.timestamp = Timestamp.now()
                     notesViewModel.insert(note)
                 }
             }
