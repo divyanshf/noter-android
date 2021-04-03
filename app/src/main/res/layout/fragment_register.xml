@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_gravity="center"
+        android:layout_marginVertical="20dp"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/ic_baseline_local_library_24"
+            android:src="@drawable/ic_baseline_local_library_24_yellow"
             android:scaleType="fitXY"
             android:contentDescription="@string/app_name" />
 
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             app:hintTextColor="@color/gold"
-            app:boxStrokeColor="@color/gold"
+            app:boxStrokeColor="@color/text_box_input"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             app:hintTextColor="@color/gold"
-            app:boxStrokeColor="@color/gold"
+            app:boxStrokeColor="@color/text_box_input"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -56,9 +56,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hintTextColor="@color/gold"
             android:layout_margin="20dp"
-            app:boxStrokeColor="@color/gold"
+            app:hintTextColor="@color/gold"
+            app:boxStrokeColor="@color/text_box_input"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             app:hintTextColor="@color/gold"
-            app:boxStrokeColor="@color/gold"
+            app:boxStrokeColor="@color/text_box_input"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText

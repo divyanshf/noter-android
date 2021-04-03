@@ -5,10 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +32,9 @@ class NotesFragment : Fragment(){
     private var toolbarHead: EditText? = null
     private var fabAdd: FloatingActionButton? = null
     private var progressBar:ProgressBar? = null
+    private lateinit var emptyNotes:LinearLayout
+    private lateinit var emptyNotesImageView:ImageView
+    private lateinit var emptyNotesTextView:TextView
     private lateinit var recyclerView:RecyclerView
     private lateinit var recyclerViewAdapter:NotesAdapter
     private var notes:List<Note> = ArrayList()
@@ -53,8 +55,14 @@ class NotesFragment : Fragment(){
         toolbarHead = activity?.findViewById(R.id.toolbar_head_edit)
         fabAdd = activity?.findViewById(R.id.fab_add_note)
         progressBar = activity?.findViewById(R.id.progress_bar)
+        emptyNotes = view.findViewById(R.id.empty_notes)
+        emptyNotesImageView = view.findViewById(R.id.empty_notes_image_view)
+        emptyNotesTextView = view.findViewById(R.id.empty_notes_text_view)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
+
+        emptyNotesImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_outline_local_library_24, activity?.theme))
+        emptyNotesTextView.text = "No Notes Created"
 
         toolbar?.title = null
         toolbarHead?.isFocusable = false
@@ -109,6 +117,14 @@ class NotesFragment : Fragment(){
                     progressBar?.visibility = View.GONE
                     notes = it.result
                     recyclerViewAdapter.setNotes(it.result)
+                    if(notes.isEmpty()){
+                        recyclerView.visibility = View.GONE
+                        emptyNotes.visibility = View.VISIBLE
+                    }
+                    else{
+                        recyclerView.visibility = View.VISIBLE
+                        emptyNotes.visibility = View.GONE
+                    }
                 }
                 is Result.Error -> {
                     progressBar?.visibility = View.GONE

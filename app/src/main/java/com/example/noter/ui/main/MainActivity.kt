@@ -166,7 +166,6 @@ class MainActivity : AppCompatActivity() {
     private fun transactFragmentSearch(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.content_fragment, fragment)
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 

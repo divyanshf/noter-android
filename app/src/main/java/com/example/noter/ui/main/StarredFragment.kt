@@ -5,8 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,9 @@ class StarredFragment : Fragment() {
     private var toolbar: Toolbar? = null
     private var progressBar:ProgressBar? = null
     private lateinit var recyclerView: RecyclerView
+    private lateinit var emptyNotes: LinearLayout
+    private lateinit var emptyNotesImageView: ImageView
+    private lateinit var emptyNotesTextView: TextView
     private lateinit var recyclerViewAdapter: NotesAdapter
     private val notesViewModel: NotesViewModel by viewModels()
     private var notes:List<Note> = ArrayList()
@@ -44,9 +48,15 @@ class StarredFragment : Fragment() {
 
         toolbar = activity?.findViewById(R.id.my_toolbar)
         toolbar?.setTitle(R.string.starred)
+        emptyNotes = view.findViewById(R.id.empty_notes)
+        emptyNotesImageView = view.findViewById(R.id.empty_notes_image_view)
+        emptyNotesTextView = view.findViewById(R.id.empty_notes_text_view)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerViewAdapter = NotesAdapter(requireContext())
         progressBar = activity?.findViewById(R.id.progress_bar)
+
+        emptyNotesImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_outline_star_outline_24, activity?.theme))
+        emptyNotesTextView.text = "No Starred Notes"
 
 
         recyclerView.layoutManager = StaggeredGridLayoutManager(listStyle!!.toInt(), LinearLayoutManager.VERTICAL)
@@ -71,16 +81,23 @@ class StarredFragment : Fragment() {
             when(it){
                 Result.Progress -> {
                     progressBar?.visibility = View.VISIBLE
-                    Log.i("Notes", "progress")
                 }
                 is Result.Success -> {
                     progressBar?.visibility = View.GONE
                     notes = it.result
                     recyclerViewAdapter.setNotes(it.result)
+                    if(notes.isEmpty()){
+                        recyclerView.visibility = View.GONE
+                        emptyNotes.visibility = View.VISIBLE
+                    }
+                    else{
+                        recyclerView.visibility = View.VISIBLE
+                        emptyNotes.visibility = View.GONE
+                    }
                 }
                 is Result.Error -> {
                     progressBar?.visibility = View.GONE
-                    Log.i("Notes", it.message)
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })
