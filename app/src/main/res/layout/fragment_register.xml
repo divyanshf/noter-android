@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginVertical="20dp"
         android:orientation="vertical">
 
         <ImageView
@@ -56,7 +54,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
             app:hintTextColor="@color/gold"
             app:boxStrokeColor="@color/text_box_input"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -69,6 +68,13 @@
                 android:hint="@string/password"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="20dp"
+            android:text="Password must be at least 6 characters"
+            android:textColor="@color/design_default_color_secondary"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -87,18 +93,11 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"/>
-
         <Button
             android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="20dp"
             android:backgroundTint="?attr/colorSurface"
             android:text="@string/register"/>
 
@@ -107,7 +106,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/auth_warning"
-            android:layout_marginTop="20dp"
             android:textColor="@color/design_default_color_error"
             android:visibility="invisible"/>
 

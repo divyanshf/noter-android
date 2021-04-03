@@ -54,12 +54,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"/>
-
         <Button
             android:id="@+id/login_button"
             android:layout_width="match_parent"

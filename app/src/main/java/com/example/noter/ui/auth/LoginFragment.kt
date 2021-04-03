@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -20,7 +18,6 @@ import com.example.noter.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -28,7 +25,6 @@ class LoginFragment : Fragment() {
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
     private lateinit var warningTextView: TextView
-    private lateinit var loadingView: ProgressBar
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var navController:NavController
@@ -45,11 +41,9 @@ class LoginFragment : Fragment() {
         emailEditText = view.findViewById(R.id.email_edit_text)
         passwordEditText = view.findViewById(R.id.password_edit_text)
         warningTextView = view.findViewById(R.id.login_warning)
-        loadingView = view.findViewById(R.id.progress_bar)
 
         view.findViewById<Button>(R.id.login_button).setOnClickListener {
             warningTextView.visibility = View.INVISIBLE
-            loadingView.visibility = View.VISIBLE
             if(validate()){
                 try {
                     userViewModel.login(email, password)
@@ -60,7 +54,6 @@ class LoginFragment : Fragment() {
                 checkUser()
             }
             else{
-                loadingView.visibility = View.INVISIBLE
                 warningTextView.visibility = View.VISIBLE
             }
         }
@@ -88,7 +81,6 @@ class LoginFragment : Fragment() {
             }
             else{
                 warningTextView.visibility = View.VISIBLE
-                loadingView.visibility = View.INVISIBLE
             }
         }
     }
