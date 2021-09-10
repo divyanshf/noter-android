@@ -98,6 +98,8 @@ class TrashFragment : Fragment() {
                 is Result.Error -> {
                     progressBar?.visibility = View.GONE
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    recyclerView.visibility = View.GONE
+                    emptyNotes.visibility = View.VISIBLE
                 }
             }
         })

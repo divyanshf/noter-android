@@ -130,6 +130,8 @@ class NotesFragment : Fragment(){
                     progressBar?.visibility = View.GONE
                     Log.i("Notes", it.message)
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    recyclerView.visibility = View.GONE
+                    emptyNotes.visibility = View.VISIBLE
                 }
             }
         })

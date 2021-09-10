@@ -24,7 +24,7 @@ constructor(
         val user = firebaseAuth.currentUser
         try {
             usersCollection
-                    .document(user?.email!!)
+                    .document(user?.uid!!)
                     .collection("notes")
                     .add(createMapFromNote(note))
                     .await()
@@ -38,7 +38,7 @@ constructor(
         try {
             val user = firebaseAuth.currentUser
             usersCollection
-                    .document(user?.email!!)
+                    .document(user?.uid!!)
                     .collection("notes")
                     .document(note.id.toString())
                     .update(createMapFromNote(note))
@@ -53,7 +53,7 @@ constructor(
         try {
             val user = firebaseAuth.currentUser
             usersCollection
-                    .document(user?.email!!)
+                    .document(user?.uid!!)
                     .collection("notes")
                     .document(note.id.toString())
                     .delete()
@@ -69,7 +69,7 @@ constructor(
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
-                    .document(user?.email!!)
+                    .document(user?.uid!!)
                     .collection("notes")
                     .whereEqualTo("trash", false)
                     .whereEqualTo("archive", false)
@@ -81,7 +81,7 @@ constructor(
             emit(Result.Success(result))
         }catch (e:Exception){
             e.printStackTrace()
-            emit(Result.Error("Something went wrong!"))
+            emit(Result.Error(e.toString()))
         }
     }
 
@@ -91,7 +91,7 @@ constructor(
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
-                    .document(user?.email!!)
+                    .document(user?.uid!!)
                     .collection("notes")
                     .whereEqualTo("trash", false)
                     .whereEqualTo("archive", true)
@@ -113,7 +113,7 @@ constructor(
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
-                    .document(user?.email!!)
+                    .document(user?.uid!!)
                     .collection("notes")
                     .whereEqualTo("star", true)
                     .whereEqualTo("trash", false)
@@ -136,7 +136,7 @@ constructor(
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
-                    .document(user?.email!!)
+                    .document(user?.uid!!)
                     .collection("notes")
                     .whereEqualTo("trash", true)
                     .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -157,7 +157,7 @@ constructor(
         try {
             val user = firebaseAuth.currentUser
             val snap = usersCollection
-                    .document(user?.email!!)
+                    .document(user?.uid!!)
                     .collection("notes")
                     .whereEqualTo("trash", false)
                     .whereEqualTo("archive", false)
