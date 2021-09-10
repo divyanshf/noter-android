@@ -3,4 +3,4 @@ A google keep look alike.
 
 It is the android version of the web application [Noter](https://github.com/DivyanshFalodiya/noter-web)
 
-You can download noter [here](https://i.diawi.com/N9m3eH)
+You can download noter [here](https://github.com/DivyanshFalodiya/noter-android/files/7143164/Noter.zip)
