@@ -72,4 +72,15 @@ You can download the zip file of apk [here](https://github.com/DivyanshFalodiya/
     <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/edit.png" width=200 ></td>
   </tr>
  </table>
+ 
+ ### Misc Screens
+ 
+ <table>
+  <tr>
+    <td>Settings Screen</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/settings.png" width=200 ></td>
+  </tr>
+ </table>
 
