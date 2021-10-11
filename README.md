@@ -10,13 +10,19 @@ An android application to keep your thoughts and ideas safe.
 - Search for a specific note.
 
 ## Technologies / Libraries Used
-- NextJS
-- Material UI
-- Javascript
+- Kotlin
 - Firebase
+- Hilt
+- Android Jetpack
+- XML
+
+## Concepts
+- Architecture : MVVM / Repository pattern
+- Object Oriented Programming
 
 ## Motivation
-- Getting to understand NextJS.
+- Getting to know concepts in Android Development
+- Understanding Kotlin
 
 ## Guideline
 
