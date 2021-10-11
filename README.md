@@ -42,9 +42,9 @@ You can download the zip file of apk [here](https://github.com/DivyanshFalodiya/
      <td>Login Screen</td>
   </tr>
   <tr>
-    <td><img src="https://ibb.co/QDyWhnP" width=200 ></td>
-    <td><img src="https://ibb.co/d6xLkhz" width=200 ></td>
-   <td><img src="https://ibb.co/tb3vDcG" width=200 ></td>
+    <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/auth.png" width=200 ></td>
+    <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/register.png" width=200 ></td>
+   <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/login.png" width=200 ></td>
   </tr>
  </table>
  
@@ -59,11 +59,11 @@ You can download the zip file of apk [here](https://github.com/DivyanshFalodiya/
    <td>Edit/Add Note Screen</td>
   </tr>
   <tr>
-    <td><img src="https://ibb.co/zFB69Y7" width=200 ></td>
-    <td><img src="https://ibb.co/rtmwkfK" width=200 ></td>
-    <td><img src="https://ibb.co/TPDvmnf" width=200 ></td>
-    <td><img src="https://ibb.co/6gG0vvX" width=200 ></td>
-    <td><img src="https://ibb.co/mSsjBmN" width=200 ></td>
+    <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/main.png" width=200 ></td>
+    <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/star.png" width=200 ></td>
+    <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/archive.png" width=200 ></td>
+    <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/trash.png" width=200 ></td>
+    <td><img src="https://raw.githubusercontent.com/DivyanshFalodiya/noter-android/master/screens/edit.png" width=200 ></td>
   </tr>
  </table>
 
