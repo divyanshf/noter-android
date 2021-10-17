@@ -8,6 +8,7 @@ An android application to keep your thoughts and ideas safe.
 - Mark your notes as important by starring them.
 - Customize the notes as you like.
 - Search for a specific note.
+- Light / Dark theme available.
 
 ## Technologies / Libraries Used
 - Kotlin
